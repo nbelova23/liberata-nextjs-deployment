@@ -12,24 +12,25 @@ This guide explains how to submit your completed exercises for review and tracki
 
 ### Step 1: Fork the Repository (One Time Setup)
 
-1. **Go to the original repository:**
+1. **Go to the original repository within your organization:**
    ```
-   https://github.com/liberata-project/liberata-onboarding
+   https://github.com/YOUR-ORG/liberata-onboarding
    ```
 
 2. **Click "Fork" in the top right**
-   - This creates your own copy of the repository
+   - This creates your own copy of the repository within the organization
    - You can modify this copy without affecting the original
+   - The fork will inherit the organization's privacy settings
 
 3. **Clone YOUR fork to your computer:**
    ```bash
-   git clone git@github.com:YOUR-USERNAME/liberata-onboarding.git
-   cd liberata-onboarding
+   git clone git@github.com:YOUR-ORG/YOUR-USERNAME-liberata-onboarding.git
+   cd YOUR-USERNAME-liberata-onboarding
    ```
 
 4. **Add the original repository as "upstream":**
    ```bash
-   git remote add upstream git@github.com:liberata-project/liberata-onboarding.git
+   git remote add upstream git@github.com:YOUR-ORG/liberata-onboarding.git
    ```
 
 ### Step 2: Work on Each Exercise
@@ -66,7 +67,7 @@ For each exercise, follow this pattern:
 
 1. **Go to your fork on GitHub**
 2. **Click "New Pull Request"**
-3. **Set the base repository to the original:** `liberata-project/liberata-onboarding`
+3. **Set the base repository to the original:** `YOUR-ORG/liberata-onboarding`
 4. **Set the compare branch to your exercise branch:** `exercise/YOUR-USERNAME-01-git-basics`
 5. **Use this exact title format:**
 
@@ -167,7 +168,7 @@ exercise/YOUR-USERNAME-[EXERCISE-NUMBER]-[EXERCISE-NAME]
 **A:** You can continue working on the same branch and push updates. The PR will automatically update with your new commits. Add a comment to let instructors know you've made improvements.
 
 ### Q: Do I need to keep my fork public?
-**A:** Yes, your fork should be public so instructors can review your work. Don't worry - this is normal for educational repositories.
+**A:** Since this is within a private GitHub organization, your fork will automatically inherit the organization's privacy settings. Instructors will have access to review your work through the organization.
 
 ### Q: What if I accidentally modify the main branch?
 **A:** No problem! Create a new branch from main and copy your work there. Always work in feature branches, never directly on main.
@@ -175,19 +176,17 @@ exercise/YOUR-USERNAME-[EXERCISE-NUMBER]-[EXERCISE-NAME]
 ## 🚨 Important Notes
 
 ### DO:
-- ✅ Work in your own fork
+- ✅ Work in your own fork within the organization
 - ✅ Use the branch naming convention
 - ✅ Create PRs with the correct title format: `[SUBMISSION] username: Exercise XX - Name`
 - ✅ Fill out the PR description template completely
 - ✅ Ask questions if you're stuck
-- ✅ Keep your fork public for review
 
 ### DON'T:
 - ❌ Modify the main branch directly
 - ❌ Submit PRs without the `[SUBMISSION]` tag in the title
 - ❌ Submit work without following the naming convention
 - ❌ Wait until the last minute to ask for help
-- ❌ Make your fork private
 
 ## 🎓 Academic Integrity
 
