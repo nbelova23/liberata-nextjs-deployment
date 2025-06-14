@@ -28,7 +28,7 @@ import React from 'react';
 //    - onClick: What happens when clicked (like turning on a light)
 //    - disabled: Can it be clicked? (like a broken switch)
 export function Button(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the Button component! Make it look like a light switch that can be clicked.');
+  throw new Error('🚧 TODO: Implement the Button component! Make it look like a clickable button with different variants and sizes.');
 }
 
 // 2. Create a Card component (like a photo frame)
@@ -90,29 +90,52 @@ export function Example() {
         <div style={{ opacity: 0.5 }}>
           <h3>What you'll build:</h3>
           
-          {/* Like a light switch that says "Click me" */}
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 Button: A clickable button with different styles and sizes
-          </div>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+            gap: '16px',
+            marginTop: '16px'
+          }}>
+            {/* Like a light switch that says "Click me" */}
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 Button</div>
+              <div style={{ marginBottom: '8px', fontSize: '0.9rem', color: '#666' }}>
+                TODO: Student should add Button component here
+              </div>
+              <Button variant="primary" size="large" onClick={() => alert('Button clicked!')}>Click me</Button>
+            </div>
 
-          {/* Like a photo frame with a user's info */}
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 Card: A container with title, content, and optional footer
-          </div>
+            {/* Like a photo frame with a user's info */}
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 Card</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Student should add Card component here
+              </div>
+            </div>
 
-          {/* Like a name tag with user info */}
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 UserProfile: A profile display with avatar, name, role, and action buttons
-          </div>
+            {/* Like a name tag with user info */}
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 UserProfile</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Student should add UserProfile component here
+              </div>
+            </div>
 
-          {/* Like a shopping list with two items */}
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 TodoList: A list of tasks with checkboxes and delete buttons
-          </div>
+            {/* Like a shopping list with two items */}
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 TodoList</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Student should add TodoList component here
+              </div>
+            </div>
 
-          {/* Like a search bar that waits 300ms */}
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 SearchInput: A search input with placeholder and debounce
+            {/* Like a search bar that waits 300ms */}
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 SearchInput</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Student should add SearchInput component here
+              </div>
+            </div>
           </div>
         </div>
       </div>
