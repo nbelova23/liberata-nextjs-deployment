@@ -95,20 +95,53 @@ export function Example() {
         <div style={{ opacity: 0.5 }}>
           <h3>What you'll build:</h3>
           
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 ThemeProvider: Share theme state (colors, fonts) across app
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 UserProvider: Share user authentication state
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 SettingsProvider: Share app settings and preferences
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 LanguageProvider: Share language and translations
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+            gap: '16px',
+            marginTop: '16px'
+          }}>
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 ThemeProvider</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Provider to share theme state (colors, fonts) across app
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 UserProvider</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Provider to share user authentication state
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 SettingsProvider</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Provider to share app settings and preferences
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 LanguageProvider</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Provider to share language and translations with ThemeToggle
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 ThemeToggle</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Component using useContext to access and toggle theme
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 LanguageSelector</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Component using useContext to change language
+              </div>
+            </div>
           </div>
         </div>
       </div>

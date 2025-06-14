@@ -85,10 +85,6 @@ export function Login(): JSX.Element {
   throw new Error('🚧 TODO: Implement the Login component! Create a login form with navigation after login.');
 }
 
-export function App(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the App component! Set up BrowserRouter with Routes and Route components.');
-}
-
 // Example usage (like a preview):
 export function Example() {
   return (
@@ -111,24 +107,74 @@ export function Example() {
         <div style={{ opacity: 0.5 }}>
           <h3>What you'll build:</h3>
           
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 Navigation: A menu with links to different pages
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 Home: A welcome page (like the front door)
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 ProductList: A page showing all products
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 ProductDetail: A page for specific product (uses URL parameters)
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 App: Main component with router setup and all routes
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+            gap: '16px',
+            marginTop: '16px'
+          }}>
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 Navigation</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Menu component with Link components for page navigation
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 Home</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Welcome page component (main landing page)
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 ProductList</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Component showing all products with links to details
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 ProductDetail</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Component using useParams to show specific product details
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 About</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: About page component with company information
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 Contact</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Contact page component with form or contact info
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 AdminPanel</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Admin-only area component with protected routes
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 Profile</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: User profile component showing user information
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 Login</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Login form component with navigation after authentication
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -147,5 +193,4 @@ export function Example() {
   );
 }
 
-// Export the Example as default for now
-export default Example; 
+export const App = () => <Example />; 

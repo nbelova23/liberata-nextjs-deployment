@@ -98,24 +98,46 @@ export function Example() {
         <div style={{ opacity: 0.5 }}>
           <h3>What you'll build:</h3>
           
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 useForm: A hook to manage form state and validation
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 FormField: A reusable input component with label and error display
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 Form: A wrapper component for forms with submit handling
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 RegistrationForm: A complete registration form with validation
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 SurveyForm: A feedback form with different input types
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+            gap: '16px',
+            marginTop: '16px'
+          }}>
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 useForm</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Hook to manage form state and validation
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 FormField</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Reusable input component with label and error display
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 Form</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Wrapper component for forms with submit handling
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 RegistrationForm</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Complete registration form with validation using useForm hook
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 SurveyForm</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Feedback form with different input types using form components
+              </div>
+            </div>
           </div>
         </div>
       </div>

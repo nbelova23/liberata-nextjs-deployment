@@ -135,24 +135,46 @@ export function Example() {
         <div style={{ opacity: 0.5 }}>
           <h3>What you'll build:</h3>
           
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 useCounter: A hook to track and modify a number (like a scoreboard)
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 useTimer: A hook for countdown timers (like a stopwatch)
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 useFetch: A hook to get data from APIs (like a news reader)
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 useForm: A hook to handle form data and validation (like a bouncer)
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 useLocalStorage: A hook to save data in browser (like a notebook)
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+            gap: '16px',
+            marginTop: '16px'
+          }}>
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 PersistentCounter</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Component that uses useCounter + useLocalStorage hooks
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 DebouncedSearch</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Component that uses useDebounce hook with search input
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 ResponsiveComponent</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Component that uses useWindowSize hook to show screen size
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 PreviousValueComponent</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Component that uses usePrevious hook to show old values
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 Dropdown</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Component that uses useClickOutside hook to close on outside click
+              </div>
+            </div>
           </div>
         </div>
       </div>

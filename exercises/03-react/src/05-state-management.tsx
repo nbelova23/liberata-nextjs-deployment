@@ -167,24 +167,46 @@ export function Example() {
         <div style={{ opacity: 0.5 }}>
           <h3>What you'll build:</h3>
           
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 TodoList: A task manager with filtering and actions
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 DataFetcher: A component that fetches and manages API data
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 Counter: A complex counter using useReducer
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 FormWithValidation: A form with complex validation state
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 ShoppingCart: A cart system using Context API
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+            gap: '16px',
+            marginTop: '16px'
+          }}>
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 TodoList</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Task manager component with filtering and state management
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 DataFetcher</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Component that fetches and manages API data with loading states
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 Counter</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Complex counter component using useReducer for state management
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 FormWithValidation</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Smart form component with complex validation state
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 ShoppingCart</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Cart system using Context API with CartProvider and ProductCard
+              </div>
+            </div>
           </div>
         </div>
       </div>

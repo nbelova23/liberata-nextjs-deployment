@@ -87,20 +87,53 @@ export function Example() {
         <div style={{ opacity: 0.5 }}>
           <h3>What you'll build:</h3>
           
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 DataLoader: A component that fetches and displays data
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 PollingComponent: A component that fetches data at intervals
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 SearchDebouncer: A search input that waits before searching
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 ResourceCleaner: A component that cleans up resources
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+            gap: '16px',
+            marginTop: '16px'
+          }}>
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 DataLoader</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Component that fetches and displays data with loading/error states
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 PollingComponent</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Component that fetches data at regular intervals using setInterval
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 SearchDebouncer</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Search input component that waits before searching using setTimeout
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 ResourceCleaner</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Component that cleans up resources using useEffect cleanup function
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 FetchUser</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Component that fetches user data with loading and error handling
+              </div>
+            </div>
+            
+            <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
+              <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 PollingTime</div>
+              <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                TODO: Component that polls for current time at regular intervals
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -80,46 +80,69 @@ export function ProductPage(props: any): JSX.Element {
 // Example usage (like a preview):
 export function Example() {
   return (
-    <div style={{ padding: '20px' }}>
+    <div className="p-5">
       <h2>SSR & SSG Exercise</h2>
-      <p style={{ color: '#666', marginBottom: '20px' }}>
+      <p className="text-gray-600 mb-5">
         🎯 <strong>Your Goal:</strong> Implement components that use different rendering strategies!
       </p>
       
-      <div style={{ 
-        border: '2px dashed #dc3545', 
-        padding: '20px', 
-        borderRadius: '8px',
-        backgroundColor: '#f8d7da'
-      }}>
-        <p style={{ color: '#721c24', marginBottom: '16px' }}>
+      <div className="border-2 border-dashed border-red-500 p-5 rounded-lg bg-red-100">
+        <p className="text-red-900 mb-4">
           ⚠️ <strong>Advanced Topic!</strong> This exercise covers server-side rendering concepts that are quite complex for beginners.
         </p>
         
-        <div style={{ opacity: 0.5 }}>
+        <div className="opacity-50">
           <h3>What you'll learn:</h3>
           
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 SSG (Static Site Generation): Pre-build pages at build time
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 SSR (Server-Side Rendering): Build pages on each request
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 ISR (Incremental Static Regeneration): Update static pages over time
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 Data Fetching: Get data for different rendering strategies
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+            <div className="p-4 border border-dashed border-gray-300 rounded-lg">
+              <div className="mb-3 font-bold">📝 StaticPage</div>
+              <div className="text-sm text-gray-600">
+                TODO: Component pre-built at build time using SSG
+              </div>
+            </div>
+            
+            <div className="p-4 border border-dashed border-gray-300 rounded-lg">
+              <div className="mb-3 font-bold">📝 ServerSidePage</div>
+              <div className="text-sm text-gray-600">
+                TODO: Component built on each request using SSR
+              </div>
+            </div>
+            
+            <div className="p-4 border border-dashed border-gray-300 rounded-lg">
+              <div className="mb-3 font-bold">📝 HybridPage</div>
+              <div className="text-sm text-gray-600">
+                TODO: Component using ISR (Incremental Static Regeneration)
+              </div>
+            </div>
+            
+            <div className="p-4 border border-dashed border-gray-300 rounded-lg">
+              <div className="mb-3 font-bold">📝 BlogPost</div>
+              <div className="text-sm text-gray-600">
+                TODO: Static blog post component with SSG
+              </div>
+            </div>
+            
+            <div className="p-4 border border-dashed border-gray-300 rounded-lg">
+              <div className="mb-3 font-bold">📝 UserDashboard</div>
+              <div className="text-sm text-gray-600">
+                TODO: Personalized dashboard component with SSR
+              </div>
+            </div>
+            
+            <div className="p-4 border border-dashed border-gray-300 rounded-lg">
+              <div className="mb-3 font-bold">📝 ProductPage</div>
+              <div className="text-sm text-gray-600">
+                TODO: Product page component with ISR and data fetching
+              </div>
+            </div>
           </div>
         </div>
       </div>
       
-      <div style={{ marginTop: '20px', padding: '16px', backgroundColor: '#fff3cd', borderRadius: '8px' }}>
-        <h4 style={{ color: '#856404', margin: '0 0 8px 0' }}>💡 Recommendation:</h4>
-        <p style={{ color: '#856404', margin: 0 }}>
+      <div className="mt-5 p-4 bg-yellow-100 rounded-lg">
+        <h4 className="text-yellow-800 m-0 mb-2">💡 Recommendation:</h4>
+        <p className="text-yellow-800 m-0">
           This is an advanced topic! Consider completing the other React exercises first. 
           SSR/SSG are Next.js concepts that require understanding of server-side JavaScript and build processes.
         </p>

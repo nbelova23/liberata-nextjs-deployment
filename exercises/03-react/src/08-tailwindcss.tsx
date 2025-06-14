@@ -68,46 +68,69 @@ export function CustomButton(props: any): JSX.Element {
 // Example usage (like a preview):
 export function Example() {
   return (
-    <div style={{ padding: '20px' }}>
+    <div className="p-5">
       <h2>Tailwind CSS Exercise</h2>
-      <p style={{ color: '#666', marginBottom: '20px' }}>
+      <p className="text-gray-600 mb-5">
         🎯 <strong>Your Goal:</strong> Implement styled components using Tailwind CSS utility classes!
       </p>
       
-      <div style={{ 
-        border: '2px dashed #ffc107', 
-        padding: '20px', 
-        borderRadius: '8px',
-        backgroundColor: '#fff3cd'
-      }}>
-        <p style={{ color: '#856404', marginBottom: '16px' }}>
+      <div className="border-2 border-dashed border-yellow-400 p-5 rounded-lg bg-yellow-100">
+        <p className="text-yellow-800 mb-4">
           ⚠️ <strong>Not implemented yet!</strong> The Tailwind components below will throw errors until you implement them.
         </p>
         
-        <div style={{ opacity: 0.5 }}>
+        <div className="opacity-50">
           <h3>What you'll build:</h3>
           
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 Button: A styled button with variants and sizes
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 Card: A container with shadows and rounded corners
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 Navbar: A navigation bar with responsive design
-          </div>
-          
-          <div style={{ margin: '8px 0', padding: '8px', border: '1px dashed #ccc' }}>
-            📝 Grid: A responsive grid layout system
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+            <div className="p-4 border border-dashed border-gray-300 rounded-lg">
+              <div className="mb-3 font-bold">📝 Button</div>
+              <div className="text-sm text-gray-600">
+                TODO: Styled button with Tailwind classes (bg-blue-500, px-4, py-2)
+              </div>
+            </div>
+            
+            <div className="p-4 border border-dashed border-gray-300 rounded-lg">
+              <div className="mb-3 font-bold">📝 Card</div>
+              <div className="text-sm text-gray-600">
+                TODO: Container with Tailwind classes (shadow-md, rounded-xl, p-4)
+              </div>
+            </div>
+            
+            <div className="p-4 border border-dashed border-gray-300 rounded-lg">
+              <div className="mb-3 font-bold">📝 Navbar</div>
+              <div className="text-sm text-gray-600">
+                TODO: Navigation bar with Tailwind classes (flex, justify-between)
+              </div>
+            </div>
+            
+            <div className="p-4 border border-dashed border-gray-300 rounded-lg">
+              <div className="mb-3 font-bold">📝 Grid</div>
+              <div className="text-sm text-gray-600">
+                TODO: Responsive grid with Tailwind classes (grid, grid-cols-3, gap-4)
+              </div>
+            </div>
+            
+            <div className="p-4 border border-dashed border-gray-300 rounded-lg">
+              <div className="mb-3 font-bold">📝 ResponsiveCard</div>
+              <div className="text-sm text-gray-600">
+                TODO: Card that adapts to different screen sizes with Tailwind
+              </div>
+            </div>
+            
+            <div className="p-4 border border-dashed border-gray-300 rounded-lg">
+              <div className="mb-3 font-bold">📝 CustomButton</div>
+              <div className="text-sm text-gray-600">
+                TODO: Button with custom Tailwind styling and variants
+              </div>
+            </div>
           </div>
         </div>
       </div>
       
-      <div style={{ marginTop: '20px', padding: '16px', backgroundColor: '#d1ecf1', borderRadius: '8px' }}>
-        <h4 style={{ color: '#0c5460', margin: '0 0 8px 0' }}>💡 Getting Started:</h4>
-        <ol style={{ color: '#0c5460', margin: 0, paddingLeft: '20px' }}>
+      <div className="mt-5 p-4 bg-cyan-100 rounded-lg">
+        <h4 className="text-cyan-800 m-0 mb-2">💡 Getting Started:</h4>
+        <ol className="text-cyan-800 m-0 pl-5">
           <li>Start with Button - use className with Tailwind classes</li>
           <li>Try classes like: bg-blue-500, text-white, px-4, py-2, rounded</li>
           <li>Use conditional classes for variants (primary vs secondary)</li>

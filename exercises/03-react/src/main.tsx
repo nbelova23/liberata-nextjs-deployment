@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
+import './index.css';
 import { App as ComponentsApp } from './01-components';
 import { App as HooksApp } from './02-hooks';
 import { App as FormsApp } from './03-forms';
