@@ -102,7 +102,6 @@ export function Example() {
               <div style={{ marginBottom: '8px', fontSize: '0.9rem', color: '#666' }}>
                 TODO: Student should add Button component here
               </div>
-              <Button variant="primary" size="large" onClick={() => alert('Button clicked!')}>Click me</Button>
             </div>
 
             {/* Like a photo frame with a user's info */}
