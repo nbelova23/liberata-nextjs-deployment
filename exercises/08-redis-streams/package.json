@@ -1,0 +1,25 @@
+{
+  "name": "redis-streams-exercises",
+  "version": "1.0.0",
+  "description": "Redis Streams exercises",
+  "scripts": {
+    "test": "jest",
+    "start": "echo '🚀 Running all Redis Streams exercises...' && echo '📬 Exercise 1: Basic Streams' && ts-node src/01-basic-streams.ts && echo '\\n👥 Exercise 2: Consumer Groups' && ts-node src/02-consumer-groups.ts && echo '\\n📝 Exercise 3: Message Processing' && ts-node src/03-message-processing.ts && echo '\\n📊 Exercise 4: Stream Management' && ts-node src/04-stream-management.ts",
+    "exercise1": "ts-node src/01-basic-streams.ts",
+    "exercise2": "ts-node src/02-consumer-groups.ts",
+    "exercise3": "ts-node src/03-message-processing.ts",
+    "exercise4": "ts-node src/04-stream-management.ts"
+  },
+  "dependencies": {
+    "redis": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "@types/node": "^20.0.0",
+    "jest": "^29.5.0",
+    "ts-jest": "^29.1.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.0.0"
+  },
+  "packageManager": "pnpm@8.15.6+sha512.77b89e9be77a2b06ad8f403a19cae5e22976f61023f98ad323d5c30194958ebc02ee0a6ae5d13ee454f6134e4e8caf29a05f0b1a0e1d2b17bca6b6a1f1159f86"
+}

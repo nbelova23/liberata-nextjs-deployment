@@ -1,0 +1,43 @@
+.cursor/*
+
+# Node modules (all levels)
+**/node_modules/
+
+# Next.js build output
+.next/
+**/.next/
+
+# Turborepo cache
+.turbo/
+**/.turbo/
+
+# pnpm store (if using local)
+.pnpm/
+
+# Vercel deployment output
+.vercel/
+
+# Build and dist directories
+dist/
+build/
+.cache/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# OS and editor junk
+.DS_Store
+*.log
+*.swp
+.idea/
+.vscode/
+
+# Testing outputs
+coverage/
+jest-html-reporters-*.html
+
+# Local database and tooling outputs
+supabase/.temp/
+supabase/migrations/.shadow/
