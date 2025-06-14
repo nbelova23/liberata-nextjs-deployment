@@ -195,7 +195,7 @@ git merge branch-name
 
 - [ ] Successfully cloned the repository
 - [ ] Created a personal branch with your name
-- [ ] Made at least 3 meaningful commits with proper commit messages
+- [ ] Made at least 3 meaningful commits with proper commit messages that include the last word from each of these documentation files: `docs/introduction.md`, `docs/accounts.md`, `docs/prerequisites.md`, and `docs/submission-guide.md` (proving you've read the essential docs)
 - [ ] Pushed your branch to GitHub
 - [ ] Created a pull request with a good description
 - [ ] Can explain what Git, GitHub, branches, and commits are
