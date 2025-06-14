@@ -8,20 +8,25 @@ Think of React like building with LEGO blocks:
 
 ## Quick Start 🚀
 
-1. **Start the Development Server**
+1. **Install Dependencies**
+   ```bash
+   pnpm install
+   ```
+
+2. **Start the Development Server**
    ```bash
    pnpm dev
    ```
    This will open http://localhost:3000 in your browser.
 
-2. **View Your Components**
+3. **View Your Components**
    - You'll see a dropdown menu at the top (like a TV remote)
    - Select any exercise to view it (like changing channels)
    - Each exercise has its own detailed README.md with specific instructions
    - Make changes and see them update instantly (like magic!)
    - Use the browser's developer tools (F12) to peek behind the curtain
 
-3. **Run Tests**
+4. **Run Tests**
    ```bash
    pnpm test
    ```
@@ -339,46 +344,7 @@ By the end of this exercise, you'll understand:
 - **Huge Ecosystem** - Tons of libraries and resources
 - **Industry Standard** - Used by Facebook, Netflix, Airbnb, and thousands of companies
 
-## 🚀 Quick Start (5 Minutes)
 
-### Step 1: Set Up Your React Project
-
-```bash
-# Navigate to the React exercise directory
-cd exercises/03-react
-
-# Install dependencies
-pnpm install
-
-# Start the development server
-pnpm dev
-```
-
-Your browser should open to `http://localhost:3000` showing the React exercises!
-
-### Step 2: Complete the Exercises
-
-The exercises are located in `src/exercises/` and are numbered 01-09:
-
-1. **01-components** - Build reusable UI components (Button, Card, UserProfile, etc.)
-2. **02-hooks** - Learn React hooks (useState, useEffect, custom hooks)
-3. **03-forms** - Handle user input and form validation
-4. **04-routing** - Navigate between pages with React Router
-5. **05-state-management** - Manage complex application state
-6. **06-async-effects** - Handle API calls and side effects
-7. **07-context-api** - Share state across components
-8. **08-tailwindcss** - Style components with Tailwind CSS
-9. **09-ssr-ssg** - Server-side rendering and static generation
-
-### Step 3: Start with Exercise 1
-
-Open `src/exercises/01-components/index.tsx` and implement the TODO components:
-
-- Replace `throw new Error(...)` with actual component implementations
-- Each exercise has detailed comments explaining what to build
-- Run tests with `pnpm test` to check your progress
-
-Congratulations! You're ready to start learning React! 🎉
 
 ## 🎬 YouTube Tutorials
 
@@ -657,71 +623,6 @@ const UserProfile: React.FC = () => {
   );
 };
 ```
-
-## 📚 Exercise Overview
-
-Complete these 9 exercises to master React development:
-
-### Exercise 1: Components 🧩
-Build reusable UI components:
-- **Button** - Interactive button with variants and sizes
-- **Card** - Container component with title and content
-- **UserProfile** - Display user information with avatar
-- **TodoList** - List component with checkboxes
-- **SearchInput** - Debounced search input field
-
-### Exercise 2: Hooks 🎣
-Learn React hooks and state management:
-- **useCounter** - Custom hook for counting
-- **useTimer** - Timer hook with start/pause/reset
-- **useFetch** - Data fetching hook with loading states
-- **useLocalStorage** - Persist state in localStorage
-- **useDebounce** - Debounce values for performance
-
-### Exercise 3: Forms 📝
-Handle user input and validation:
-- **useForm** - Custom form management hook
-- **FormField** - Reusable form input component
-- **RegistrationForm** - Complete form with validation
-- **SurveyForm** - Multi-field form with different input types
-
-### Exercise 4: Routing 🛣️
-Navigate between pages:
-- **Router setup** - Configure React Router
-- **Navigation** - Link between pages
-- **Dynamic routes** - Handle URL parameters
-- **Protected routes** - Authentication-based routing
-
-### Exercise 5: State Management 🧠
-Manage complex application state:
-- **TodoList** - Task management with filters
-- **DataFetcher** - API data with loading states
-- **Counter** - Complex state with useReducer
-- **ShoppingCart** - Context-based state sharing
-
-### Exercise 6: Async Effects ⚡
-Handle side effects and API calls:
-- **FetchUser** - Load user data from API
-- **PollingTime** - Update time every second
-- **DataSubscription** - Real-time data updates
-
-### Exercise 7: Context API 🌐
-Share state across components:
-- **ThemeProvider** - Global theme management
-- **AuthProvider** - User authentication context
-- **NotificationProvider** - App-wide notifications
-
-### Exercise 8: Tailwind CSS 🎨
-Style components with utility classes:
-- **Responsive design** - Mobile-first layouts
-- **Component styling** - Beautiful UI components
-- **Dark mode** - Theme switching
-
-### Exercise 9: SSR/SSG 🚀
-Server-side rendering and static generation:
-- **Static pages** - Pre-rendered content
-- **Dynamic routes** - Server-side data fetching
-- **Performance optimization** - Fast loading pages
 
 ## 🔍 Common React Patterns
 
