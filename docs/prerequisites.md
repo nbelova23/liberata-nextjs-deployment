@@ -134,6 +134,6 @@ terraform -version
 Once you've completed the setup and verified all tools are working:
 1. Create necessary accounts (GitHub, Supabase, Cloudflare)
 2. Set up SSH keys
-3. Fork and clone the Liberata repository
+3. Clone the onboarding repository
 
 Proceed to [Accounts & Setup](./accounts.md) for the next steps! 

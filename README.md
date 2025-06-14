@@ -18,14 +18,14 @@ The exercises are designed to be completed in order, building upon previous conc
 
 ```
 exercises/
-├── 01-git-github/     # Git basics, branching, PRs (Coming Soon)
-├── 02-typescript/     # TypeScript fundamentals
-├── 03-react/          # React components, hooks, routing
-├── 04-nextjs/         # Next.js framework (Coming Soon)
-├── 05-supabase/       # Database and authentication (Coming Soon)
-├── 06-r2-storage/     # File storage with Cloudflare R2 (Coming Soon)
-├── 07-edge-workers/   # Serverless functions (Coming Soon)
-└── 08-terraform/      # Infrastructure as code (Coming Soon)
+├── 01-git-basics/     # Git fundamentals, branching, and pull requests
+├── 02-typescript/     # TypeScript fundamentals and modern JavaScript
+├── 03-react/          # React components, hooks, and state management
+├── 04-nextjs/         # Next.js framework and server-side rendering
+├── 05-edge-worker/    # Cloudflare Workers and serverless functions
+├── 06-r2-storage/     # File storage and CDN with Cloudflare R2
+├── 07-supabase-rls/   # Database and Row-Level Security
+└── 08-redis-streams/  # Real-time data processing with Redis
 ```
 
 ## 🚀 Getting Started
@@ -54,34 +54,55 @@ Make sure you have these installed:
 
 3. **Follow the exercise README for detailed instructions**
 
+## 📚 Essential Documentation
+
+Before starting the exercises, please read through these important guides:
+
+- **[Introduction](docs/introduction.md)** - Overview of Liberata and this onboarding program
+- **[Prerequisites](docs/prerequisites.md)** - Required tools and setup instructions
+- **[Accounts & Setup](docs/accounts.md)** - Creating accounts and SSH key configuration
+- **[Glossary](docs/glossary.md)** - Web development terms and concepts explained
+
 ## 📖 Exercise Structure
 
-Each exercise directory is self-contained and includes:
+Each exercise directory contains different components based on the technology being learned:
 
+### **All Exercises Include:**
 - **README.md** - Step-by-step instructions and learning objectives
-- **src/** - Source files with TODO comments for you to implement
-- **tests/** - Automated tests to verify your implementations
-- **package.json** - Dependencies specific to that exercise
+
+### **Exercise-Specific Structure:**
+
+**📁 Git Basics** - Conceptual learning (no code files)
+- Just README with Git workflow instructions
+
+**📁 TypeScript & React** - Full development setup
+- **src/** - Source files with TODO comments to implement
+- **tests/** - Automated tests to verify your implementations  
+- **package.json** - Dependencies and scripts
+
+**📁 Next.js** - Full-stack application
+- **pages/** - Next.js page components
+- **styles/** - CSS and styling files
+- **tests/** - Component and integration tests
+
+**📁 Cloud Services** (Edge Worker, R2, Supabase, Redis)
+- **src/** - Implementation files
+- **package.json** - Dependencies
+- Configuration files (wrangler.toml, etc.)
 
 ### How to Work Through Exercises
 
 1. **Read the README** - Understand what you'll be building
-2. **Run the development server** - See your changes in real-time
-3. **Implement the TODOs** - Follow the guided comments in source files
-4. **Run tests** - Verify your implementation works correctly
+2. **Install dependencies** - Run `pnpm install` (where applicable)
+3. **Follow the guided steps** - Each README has specific instructions
+4. **Test your work** - Use provided tests or manual verification
 5. **Move to next exercise** - Build upon what you've learned
 
 ## 🧑‍🎓 For Students
 
-### Web Development Jargon Explained
+### Need Help with Terms?
 
-As you work through these exercises, you'll encounter terms that might be new. Here are some key concepts:
-
-- **Environment Variables** - Configuration values that change between development and production
-- **CORS** - Cross-Origin Resource Sharing, a security feature that controls how web pages access resources
-- **API** - Application Programming Interface, how different software components communicate
-- **Component** - Reusable pieces of UI code (like LEGO blocks for websites)
-- **Hook** - Special functions in React that let you use state and other features
+If you encounter unfamiliar web development terms, check out our comprehensive [Glossary](docs/glossary.md) which explains everything from APIs to CORS to Environment Variables with beginner-friendly analogies.
 
 ### Getting Help
 
@@ -94,17 +115,14 @@ As you work through these exercises, you'll encounter terms that might be new. H
 
 ### ✅ Ready to Use
 
+- **[Git Basics](exercises/01-git-basics/README.md)** - Version control fundamentals, branching, and pull requests
 - **[TypeScript Exercises](exercises/02-typescript/README.md)** - Learn TypeScript basics, types, and functions
 - **[React Exercises](exercises/03-react/README.md)** - Master React components, hooks, and state management
-
-### 🚧 Coming Soon
-
-- **Git & GitHub** - Version control fundamentals
-- **Next.js** - Full-stack React development
-- **Supabase** - Database and authentication
-- **Cloudflare R2** - File storage and CDN
-- **Edge Workers** - Serverless functions
-- **Terraform** - Infrastructure management
+- **[Next.js](exercises/04-nextjs/README.md)** - Full-stack React development with server-side rendering
+- **[Edge Workers](exercises/05-edge-worker/README.md)** - Serverless functions with Cloudflare Workers
+- **[R2 Storage](exercises/06-r2-storage/README.md)** - File storage and CDN with Cloudflare R2
+- **[Supabase RLS](exercises/07-supabase-rls/README.md)** - Database and Row-Level Security
+- **[Redis Streams](exercises/08-redis-streams/README.md)** - Real-time data processing with Redis
 
 ## 🎯 Learning Objectives
 
@@ -122,18 +140,20 @@ By completing these exercises, you'll be able to:
 ```
 liberata-onboarding/
 ├── README.md              # This file - overview and getting started
-├── exercises/             # All learning exercises
-│   ├── 02-typescript/     # TypeScript fundamentals
-│   │   ├── README.md      # TypeScript exercise instructions
-│   │   ├── src/           # Your code goes here
-│   │   ├── tests/         # Automated tests
-│   │   └── package.json   # Dependencies
-│   └── 03-react/          # React development
-│       ├── README.md      # React exercise instructions
-│       ├── src/           # React components and hooks
-│       ├── tests/         # Component tests
-│       └── package.json   # React dependencies
-└── docs/                  # Additional documentation (Coming Soon)
+├── docs/                  # Essential documentation and guides
+│   ├── introduction.md    # Program overview and objectives
+│   ├── prerequisites.md   # Required tools and setup
+│   ├── accounts.md        # Account creation and SSH setup
+│   └── glossary.md        # Web development terms explained
+└── exercises/             # All learning exercises
+    ├── 01-git-basics/     # Git fundamentals (README only)
+    ├── 02-typescript/     # TypeScript fundamentals (src/, tests/, package.json)
+    ├── 03-react/          # React development (src/, tests/, package.json)
+    ├── 04-nextjs/         # Next.js framework (pages/, styles/, tests/)
+    ├── 05-edge-worker/    # Cloudflare Workers (src/, wrangler.jsonc)
+    ├── 06-r2-storage/     # File storage with R2 (src/, wrangler.toml)
+    ├── 07-supabase-rls/   # Database and security (src/, package.json)
+    └── 08-redis-streams/  # Real-time data processing (src/, package.json)
 ```
 
 ## 🤝 Contributing

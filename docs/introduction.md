@@ -45,19 +45,18 @@ We understand that diving into a new tech stack can be overwhelming, especially 
 
 ## How to Use This Repository
 
-This repository is organized into three main sections:
+This repository is organized into two main sections:
 
 1. **Documentation** (`/docs`): Essential reading and reference materials
-2. **Labs** (`/labs`): Hands-on exercises and projects
-3. **Tutorials** (`/tutorials`): In-depth guides for specific technologies
+2. **Exercises** (`/exercises`): Hands-on learning modules for each technology
 
 ### Learning Path
 
 1. Start with the [Prerequisites](./prerequisites.md) to set up your development environment
 2. Create necessary accounts as described in [Accounts & Setup](./accounts.md)
-3. Begin with the [Git & DRI Warm Up](../labs/git-dri.md) lab
-4. Progress through the labs in order
-5. Use the tutorials as reference when you need more detailed information
+3. Begin with the Git Basics exercise in `/exercises/01-git-basics/`
+4. Progress through the exercises in order
+5. Use the [Glossary](./glossary.md) when you encounter unfamiliar terms
 
 ## Getting Help
 

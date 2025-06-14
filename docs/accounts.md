@@ -67,28 +67,21 @@ ssh -T git@github.com
 # You should see: "Hi username! You've successfully authenticated..."
 ```
 
-## Fork and Clone Liberata
+## Clone the Onboarding Repository
 
-1. **Fork the Repository**
-   - Go to [github.com/liberata-project/liberata](https://github.com/liberata-project/liberata)
-   - Click "Fork" in the top right
-   - Select your account as the destination
-
-2. **Clone Your Fork**
+1. **Clone the Repository**
    ```bash
-   git clone git@github.com:<your-username>/liberata.git
-   cd liberata
+   git clone git@github.com:liberata-project/liberata-onboarding.git
+   cd liberata-onboarding
    ```
 
-3. **Add Upstream Remote**
+2. **Verify the Clone**
    ```bash
-   git remote add upstream git@github.com:liberata-project/liberata.git
+   ls -la
+   # You should see directories like: docs/, exercises/, README.md
    ```
 
-4. **Install Dependencies**
-   ```bash
-   pnpm install
-   ```
+Note: For the actual Liberata project, you'll fork and clone the main repository later. This onboarding repository is for learning the tools and concepts first.
 
 ## Verify Setup
 
@@ -141,8 +134,8 @@ ssh -T git@github.com
 ## Next Steps
 
 Now that you have all accounts set up and the repository cloned:
-1. Review the [Git & DRI Warm Up](../labs/git-dri.md) lab
-2. Create your first branch
-3. Make your first commit
+1. Start with the [Git Basics exercise](../exercises/01-git-basics/README.md)
+2. Learn about branching and commits
+3. Progress through the other exercises in order
 
 Remember to keep your API keys and credentials secure and never commit them to the repository! 
