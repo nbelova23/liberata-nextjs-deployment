@@ -1,16 +1,49 @@
 /**
  * Exercise 6: State Management in Next.js
  * 
- * INSTRUCTIONS:
- * 1. Set up Zustand for global state management
- * 2. Create a shopping cart with state persistence
- * 3. Implement a product list with filtering
- * 4. Add a checkout flow with state
+ * STEP-BY-STEP INSTRUCTIONS:
  * 
- * LEARNING GOALS:
- * - Understand state management in Next.js
- * - Learn when to use local vs global state
- * - Practice state persistence and hydration
+ * STEP 1: Use React state management patterns (from React exercises)
+ * - Copy the ShoppingCart components from React Exercise 5
+ * - Use the same CartContext and CartProvider patterns
+ * - Adapt them to work with Next.js pages
+ * 
+ * STEP 2: Install Zustand (alternative approach)
+ * - Run: pnpm install zustand
+ * - Zustand is simpler than Redux for learning
+ * 
+ * STEP 3: Create a cart store
+ * - Create: pages/exercises/06-state-management/store/cartStore.ts
+ * - Add functions: addItem, removeItem, clearCart
+ * - Store items array and total count
+ * 
+ * STEP 4: Create product components (reuse React patterns)
+ * - Create: pages/exercises/06-state-management/components/ProductList.tsx
+ * - Create: pages/exercises/06-state-management/components/Cart.tsx
+ * - Use the same ProductCard component pattern from React exercises
+ * - Display products with "Add to Cart" buttons
+ * 
+ * STEP 4: Connect components to store
+ * - Use useCartStore() hook in components
+ * - Add items to cart when button clicked
+ * - Show cart count in header
+ * 
+ * STEP 5: Add persistence
+ * - Save cart to localStorage
+ * - Load cart on page refresh
+ * - Handle hydration issues
+ * 
+ * HINTS:
+ * - Zustand store: create((set) => ({ items: [], addItem: (item) => set(...) }))
+ * - Use useEffect to sync with localStorage
+ * - Check if window exists before using localStorage
+ * - Start simple - just count items first
+ * - Add product details later
+ * 
+ * SIMPLE START:
+ * - Create a counter store first
+ * - Add increment/decrement functions
+ * - Practice the Zustand pattern
  * 
  * DOCUMENTATION:
  * - Zustand: https://github.com/pmndrs/zustand

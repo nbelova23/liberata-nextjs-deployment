@@ -1,16 +1,61 @@
 /**
  * Exercise 4: Layouts in Next.js
  * 
- * INSTRUCTIONS:
- * 1. Create a shared layout component at pages/exercises/04-layouts/components/Layout.tsx
- * 2. Add a header and footer to your layout
- * 3. Create a nested layout for the blog section
- * 4. Use the layout in multiple pages
+ * STEP-BY-STEP INSTRUCTIONS:
  * 
- * LEARNING GOALS:
- * - Understand how to create and use layouts in Next.js
- * - Learn about nested layouts and layout composition
- * - Practice component composition and prop drilling
+ * STEP 1: Create a ThemeContext (React Context API concept)
+ * - Create: pages/exercises/04-layouts/context/ThemeContext.tsx
+ * - Add theme state management:
+ *   const ThemeContext = createContext<any>(null);
+ *   export function ThemeProvider({ children }: { children: React.ReactNode }) {
+ *     const [theme, setTheme] = useState('light');
+ *     const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
+ *     return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
+ *   }
+ * 
+ * STEP 2: Create a basic Layout component
+ * - Create: pages/exercises/04-layouts/components/Layout.tsx
+ * - Use ThemeContext to apply theme styling
+ * - Add a header with navigation and theme toggle button
+ * - Add a footer with copyright text
+ * 
+ * STEP 2: Create the Layout component structure
+ * - export default function Layout({ children }) {
+ *     return (
+ *       <div>
+ *         <header>// TODO: Add navigation</header>
+ *         <main>{children}</main>
+ *         <footer>// TODO: Add footer</footer>
+ *       </div>
+ *     );
+ *   }
+ * 
+ * STEP 3: Use Layout in _app.tsx
+ * - Import your Layout component
+ * - Wrap <Component {...pageProps} /> with <Layout>
+ * - Now all pages will have the header/footer
+ * 
+ * STEP 4: Create a blog-specific layout
+ * - Create: pages/exercises/04-layouts/components/BlogLayout.tsx
+ * - Add a sidebar with blog categories
+ * - This layout should wrap the main Layout
+ * 
+ * STEP 5: Create some test pages
+ * - Create: pages/exercises/04-layouts/blog/index.tsx
+ * - Create: pages/exercises/04-layouts/blog/post-1.tsx
+ * - Use the BlogLayout for these pages
+ * 
+ * HINTS:
+ * - Layouts are just React components that accept children
+ * - You can nest layouts: BlogLayout wraps Layout
+ * - Use getLayout pattern for page-specific layouts
+ * - Add Tailwind classes for styling: "bg-gray-100 p-4"
+ * - Navigation links: <Link href="/about">About</Link>
+ * 
+ * LAYOUT PATTERN:
+ * - Layout wraps all pages (header/footer)
+ * - BlogLayout wraps blog pages (adds sidebar)
+ * - Page content goes in the middle
  * 
  * DOCUMENTATION:
  * - Layouts: https://nextjs.org/docs/basic-features/layouts

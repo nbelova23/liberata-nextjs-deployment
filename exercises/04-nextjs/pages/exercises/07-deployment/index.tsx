@@ -1,16 +1,47 @@
 /**
  * Exercise 7: Deployment and Optimization
  * 
- * INSTRUCTIONS:
- * 1. Set up environment variables for different environments
- * 2. Configure build optimization settings
- * 3. Deploy to Vercel
- * 4. Set up CI/CD with GitHub Actions
+ * STEP-BY-STEP INSTRUCTIONS:
  * 
- * LEARNING GOALS:
- * - Understand deployment options in Next.js
- * - Learn about environment configuration
- * - Practice CI/CD setup
+ * STEP 1: Create environment variables
+ * - Create: .env.local file in your project root
+ * - Add: NEXT_PUBLIC_API_URL=https://api.example.com
+ * - Add: DATABASE_URL=your-database-url (keep private)
+ * - Use process.env.NEXT_PUBLIC_API_URL in your code
+ * 
+ * STEP 2: Test your build locally
+ * - Run: pnpm run build
+ * - Run: pnpm run start
+ * - Check for any build errors
+ * - Test that your app works in production mode
+ * 
+ * STEP 3: Deploy to Vercel (easiest option)
+ * - Push your code to GitHub
+ * - Go to vercel.com and sign up
+ * - Connect your GitHub repo
+ * - Vercel will auto-deploy on every push
+ * 
+ * STEP 4: Configure environment variables on Vercel
+ * - Go to your project settings on Vercel
+ * - Add your environment variables
+ * - Redeploy to apply changes
+ * 
+ * STEP 5: Set up custom domain (optional)
+ * - Buy a domain name
+ * - Add it in Vercel project settings
+ * - Update DNS records
+ * 
+ * HINTS:
+ * - NEXT_PUBLIC_ variables are visible to browsers
+ * - Private variables (no NEXT_PUBLIC_) are server-only
+ * - Vercel is free for personal projects
+ * - Each git push triggers a new deployment
+ * - Check deployment logs if something breaks
+ * 
+ * ALTERNATIVE PLATFORMS:
+ * - Netlify (similar to Vercel)
+ * - Railway (includes database)
+ * - Heroku (more complex setup)
  * 
  * DOCUMENTATION:
  * - Deployment: https://nextjs.org/docs/deployment

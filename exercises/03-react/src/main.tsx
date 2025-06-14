@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { App as ComponentsApp } from './01-components';
-import { App as HooksApp } from './02-hooks';
-import { App as FormsApp } from './03-forms';
-import { App as RoutingApp } from './04-routing';
-import { App as StateManagementApp } from './05-state-management';
-import { App as AsyncEffectsApp } from './06-async-effects';
-import { App as ContextApiApp } from './07-context-api';
-import { App as TailwindCssApp } from './08-tailwindcss';
-import { App as SsrSsgApp } from './09-ssr-ssg';
+import { App as ComponentsApp } from './exercises/01-components';
+import { App as HooksApp } from './exercises/02-hooks';
+import { App as FormsApp } from './exercises/03-forms';
+import { App as RoutingApp } from './exercises/04-routing';
+import { App as StateManagementApp } from './exercises/05-state-management';
+import { App as AsyncEffectsApp } from './exercises/06-async-effects';
+import { App as ContextApiApp } from './exercises/07-context-api';
+import { App as TailwindCssApp } from './exercises/08-tailwindcss';
+import { App as SsrSsgApp } from './exercises/09-ssr-ssg';
 
 const exercises = [
   // Core Exercises (Start Here!)
