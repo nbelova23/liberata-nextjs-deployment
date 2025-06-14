@@ -1,4 +1,4 @@
-import { describe, expect, test } from '@jest/globals';
+// Jest globals are available by default
 import {
   getTitle,
   getType,

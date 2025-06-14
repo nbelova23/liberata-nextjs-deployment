@@ -1,4 +1,4 @@
-import { describe, it, expect } from '@jest/globals';
+// Jest globals are available by default
 import {
   safeParseJSON,
   validateObject,
@@ -173,7 +173,7 @@ describe('Type Safety and Error Handling', () => {
       state.set({ count: 1 });
       expect(state.get()).toEqual({ count: 1, name: 'John' });
 
-      state.update(s => ({ ...s, name: 'Jane' }));
+      state.update((s: any) => ({ ...s, name: 'Jane' }));
       expect(state.get()).toEqual({ count: 1, name: 'Jane' });
     });
   });

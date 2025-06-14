@@ -1,4 +1,4 @@
-import { describe, it, expect } from '@jest/globals';
+// Jest globals are available by default
 import {
   makeDeepPartial,
   makeDeepReadonly,
@@ -177,7 +177,7 @@ describe('Advanced TypeScript Types', () => {
 
   describe('tupleToObject', () => {
     it('converts tuple to object with numeric keys', () => {
-      const tuple = ['hello', 42, true] as const;
+      const tuple = ['hello', 42, true];
       const result = tupleToObject(tuple);
       expect(result).toEqual({
         0: 'hello',
