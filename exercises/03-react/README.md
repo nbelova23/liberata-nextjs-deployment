@@ -339,14 +339,11 @@ By the end of this exercise, you'll understand:
 - **Huge Ecosystem** - Tons of libraries and resources
 - **Industry Standard** - Used by Facebook, Netflix, Airbnb, and thousands of companies
 
-## 🚀 Quick Start (20 Minutes)
+## 🚀 Quick Start (5 Minutes)
 
 ### Step 1: Set Up Your React Project
 
 ```bash
-# Create a new branch for this exercise
-git checkout -b feature/react-basics-YOUR_NAME
-
 # Navigate to the React exercise directory
 cd exercises/03-react
 
@@ -357,53 +354,31 @@ pnpm install
 pnpm dev
 ```
 
-Your browser should open to `http://localhost:3000` showing a React app!
+Your browser should open to `http://localhost:3000` showing the React exercises!
 
-### Step 2: Create Your First Component
+### Step 2: Complete the Exercises
 
-Create `src/components/Welcome.tsx`:
+The exercises are located in `src/exercises/` and are numbered 01-09:
 
-```typescript
-import React from 'react';
+1. **01-components** - Build reusable UI components (Button, Card, UserProfile, etc.)
+2. **02-hooks** - Learn React hooks (useState, useEffect, custom hooks)
+3. **03-forms** - Handle user input and form validation
+4. **04-routing** - Navigate between pages with React Router
+5. **05-state-management** - Manage complex application state
+6. **06-async-effects** - Handle API calls and side effects
+7. **07-context-api** - Share state across components
+8. **08-tailwindcss** - Style components with Tailwind CSS
+9. **09-ssr-ssg** - Server-side rendering and static generation
 
-interface WelcomeProps {
-  name: string;
-  university: string;
-}
+### Step 3: Start with Exercise 1
 
-const Welcome: React.FC<WelcomeProps> = ({ name, university }) => {
-  return (
-    <div className="welcome">
-      <h1>Hello, {name}!</h1>
-      <p>Welcome to React development at {university}</p>
-    </div>
-  );
-};
+Open `src/exercises/01-components/index.tsx` and implement the TODO components:
 
-export default Welcome;
-```
+- Replace `throw new Error(...)` with actual component implementations
+- Each exercise has detailed comments explaining what to build
+- Run tests with `pnpm test` to check your progress
 
-### Step 3: Use Your Component
-
-Edit `src/App.tsx`:
-
-```typescript
-import React from 'react';
-import Welcome from './components/Welcome';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <Welcome name="Your Name" university="Duke University" />
-    </div>
-  );
-}
-
-export default App;
-```
-
-Congratulations! You've created your first React component with TypeScript! 🎉
+Congratulations! You're ready to start learning React! 🎉
 
 ## 🎬 YouTube Tutorials
 
@@ -683,48 +658,70 @@ const UserProfile: React.FC = () => {
 };
 ```
 
-## 🛠️ Hands-On Project: Student Dashboard
+## 📚 Exercise Overview
 
-Build a student dashboard that demonstrates all the concepts you've learned:
+Complete these 9 exercises to master React development:
 
-### Project Structure
+### Exercise 1: Components 🧩
+Build reusable UI components:
+- **Button** - Interactive button with variants and sizes
+- **Card** - Container component with title and content
+- **UserProfile** - Display user information with avatar
+- **TodoList** - List component with checkboxes
+- **SearchInput** - Debounced search input field
 
-```typescript
-// src/types/Student.ts
-export interface Student {
-  id: number;
-  name: string;
-  email: string;
-  major: string;
-  courses: Course[];
-  gpa: number;
-}
+### Exercise 2: Hooks 🎣
+Learn React hooks and state management:
+- **useCounter** - Custom hook for counting
+- **useTimer** - Timer hook with start/pause/reset
+- **useFetch** - Data fetching hook with loading states
+- **useLocalStorage** - Persist state in localStorage
+- **useDebounce** - Debounce values for performance
 
-export interface Course {
-  id: number;
-  code: string;
-  name: string;
-  credits: number;
-  grade?: 'A' | 'B' | 'C' | 'D' | 'F';
-}
-```
+### Exercise 3: Forms 📝
+Handle user input and validation:
+- **useForm** - Custom form management hook
+- **FormField** - Reusable form input component
+- **RegistrationForm** - Complete form with validation
+- **SurveyForm** - Multi-field form with different input types
 
-### Components to Build
+### Exercise 4: Routing 🛣️
+Navigate between pages:
+- **Router setup** - Configure React Router
+- **Navigation** - Link between pages
+- **Dynamic routes** - Handle URL parameters
+- **Protected routes** - Authentication-based routing
 
-1. **StudentCard** - Display individual student information
-2. **CourseList** - Show student's courses
-3. **AddCourseForm** - Form to add new courses
-4. **GPACalculator** - Calculate and display GPA
-5. **Dashboard** - Main component that combines everything
+### Exercise 5: State Management 🧠
+Manage complex application state:
+- **TodoList** - Task management with filters
+- **DataFetcher** - API data with loading states
+- **Counter** - Complex state with useReducer
+- **ShoppingCart** - Context-based state sharing
 
-### Features to Implement
+### Exercise 6: Async Effects ⚡
+Handle side effects and API calls:
+- **FetchUser** - Load user data from API
+- **PollingTime** - Update time every second
+- **DataSubscription** - Real-time data updates
 
-- [ ] Display student information
-- [ ] Show list of enrolled courses
-- [ ] Add new courses through a form
-- [ ] Calculate GPA automatically
-- [ ] Filter courses by completion status
-- [ ] Search functionality for courses
+### Exercise 7: Context API 🌐
+Share state across components:
+- **ThemeProvider** - Global theme management
+- **AuthProvider** - User authentication context
+- **NotificationProvider** - App-wide notifications
+
+### Exercise 8: Tailwind CSS 🎨
+Style components with utility classes:
+- **Responsive design** - Mobile-first layouts
+- **Component styling** - Beautiful UI components
+- **Dark mode** - Theme switching
+
+### Exercise 9: SSR/SSG 🚀
+Server-side rendering and static generation:
+- **Static pages** - Pre-rendered content
+- **Dynamic routes** - Server-side data fetching
+- **Performance optimization** - Fast loading pages
 
 ## 🔍 Common React Patterns
 
@@ -773,15 +770,17 @@ const Card: React.FC<CardProps> = ({ title, children }) => {
 
 ## ✅ Success Criteria
 
-- [ ] Understand React component architecture
-- [ ] Can create functional components with TypeScript
-- [ ] Successfully use props to pass data between components
-- [ ] Implemented state management with useState
-- [ ] Used useEffect for side effects
-- [ ] Built a complete interactive component (student dashboard)
-- [ ] Handled user events (clicks, form submissions)
-- [ ] Rendered lists and conditional content
-- [ ] Can explain React concepts in your own words
+- [ ] **Exercise 1**: Built all 5 reusable components (Button, Card, UserProfile, TodoList, SearchInput)
+- [ ] **Exercise 2**: Implemented all custom hooks (useCounter, useTimer, useFetch, useLocalStorage, useDebounce)
+- [ ] **Exercise 3**: Created form components with validation (useForm, FormField, RegistrationForm, SurveyForm)
+- [ ] **Exercise 4**: Set up routing with React Router (navigation, dynamic routes, protected routes)
+- [ ] **Exercise 5**: Managed complex state (TodoList, DataFetcher, Counter with useReducer, Context API)
+- [ ] **Exercise 6**: Handled async effects (API calls, timers, real-time updates)
+- [ ] **Exercise 7**: Implemented Context API for global state (Theme, Auth, Notifications)
+- [ ] **Exercise 8**: Styled components with Tailwind CSS (responsive design, dark mode)
+- [ ] **Exercise 9**: Built SSR/SSG pages (static generation, server-side rendering)
+- [ ] All tests pass when running `pnpm test`
+- [ ] Can explain React concepts and patterns you implemented
 
 ## 🚀 Bonus Challenges
 
