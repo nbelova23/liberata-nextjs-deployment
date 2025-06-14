@@ -61,6 +61,7 @@ Before starting the exercises, please read through these important guides:
 - **[Introduction](docs/introduction.md)** - Overview of Liberata and this onboarding program
 - **[Prerequisites](docs/prerequisites.md)** - Required tools and setup instructions
 - **[Accounts & Setup](docs/accounts.md)** - Creating accounts and SSH key configuration
+- **[Submission Guide](docs/submission-guide.md)** - How to submit your completed work for review
 - **[Glossary](docs/glossary.md)** - Web development terms and concepts explained
 
 ## 📖 Exercise Structure
@@ -96,7 +97,26 @@ Each exercise directory contains different components based on the technology be
 2. **Install dependencies** - Run `pnpm install` (where applicable)
 3. **Follow the guided steps** - Each README has specific instructions
 4. **Test your work** - Use provided tests or manual verification
-5. **Move to next exercise** - Build upon what you've learned
+5. **Submit your work** - Follow the [Submission Guide](docs/submission-guide.md)
+6. **Move to next exercise** - Build upon what you've learned
+
+## 📤 Submitting Your Work
+
+**Important:** You'll work in your own fork and submit via Pull Requests with specific title tags.
+
+### Quick Submission Overview:
+1. **Fork this repository** to your GitHub account
+2. **Create a branch** for each exercise: `exercise/YOUR-USERNAME-01-git-basics`
+3. **Complete the exercise** in your branch
+4. **Submit via Pull Request** with title: `[SUBMISSION] YOUR-USERNAME: Exercise 01 - Git Basics`
+
+👉 **Full details:** See the [Submission Guide](docs/submission-guide.md) for complete instructions.
+
+### Why This Method?
+- ✅ **Easy for instructors** - All submissions tagged with `[SUBMISSION]` in PR list
+- ✅ **Natural Git workflow** - Students practice creating PRs (real-world skill)
+- ✅ **Built-in code review** - Instructors can comment directly on code
+- ✅ **Automatic updates** - New commits automatically update the PR
 
 ## 🧑‍🎓 For Students
 
