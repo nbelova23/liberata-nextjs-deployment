@@ -17,6 +17,7 @@ Think of React like building with LEGO blocks:
 2. **View Your Components**
    - You'll see a dropdown menu at the top (like a TV remote)
    - Select any exercise to view it (like changing channels)
+   - Each exercise has its own detailed README.md with specific instructions
    - Make changes and see them update instantly (like magic!)
    - Use the browser's developer tools (F12) to peek behind the curtain
 
@@ -30,7 +31,7 @@ Think of React like building with LEGO blocks:
 
 ### Core Exercises (Start Here!) 🌟
 
-### 1. Components (01-components.tsx) 🧩
+### 1. Components (exercises/01-components/) 🧩
 #### What are Components?
 Think of components like building blocks:
 - Each block has a specific job (like a LEGO piece)
@@ -45,7 +46,7 @@ Think of components like building blocks:
 - A todo list (like a shopping list)
 - A search input (like a search bar)
 
-### 2. Hooks (02-hooks.tsx) 🎣
+### 2. Hooks (exercises/02-hooks/) 🎣
 #### What are Hooks?
 Think of hooks like special tools:
 - `useState` is like a memory box (remembers things)
@@ -59,7 +60,7 @@ Think of hooks like special tools:
 - A custom hook for data (like a personal assistant)
 - A form with validation (like a bouncer checking IDs)
 
-### 3. Forms (03-forms.tsx) 📝
+### 3. Forms (exercises/03-forms/) 📝
 #### What are Forms?
 Think of forms like a conversation:
 - You ask questions (inputs)
@@ -73,7 +74,7 @@ Think of forms like a conversation:
 - A search form (like a library catalog)
 - A feedback form (like a suggestion box)
 
-### 4. Routing (04-routing.tsx) 🗺️
+### 4. Routing (exercises/04-routing/) 🗺️
 #### What is Routing?
 Think of routing like a GPS:
 - It tells you where you are (current page)
@@ -87,7 +88,7 @@ Think of routing like a GPS:
 - Links between pages (like doors between rooms)
 - Dynamic routes (like addresses with house numbers)
 
-### 5. State Management (05-state-management.tsx) 🧠
+### 5. State Management (exercises/05-state-management/) 🧠
 #### What is State Management?
 Think of state like a brain:
 - It remembers things (data)
@@ -103,7 +104,7 @@ Think of state like a brain:
 
 ### Advanced Exercises (Try After Core!) 🚀
 
-### 6. Async Effects (06-async-effects.tsx) 🕒
+### 6. Async Effects (exercises/06-async-effects/) 🕒
 #### What are Async Effects?
 Think of async effects like a robot assistant:
 - It does tasks in the background (like a helper)
@@ -117,7 +118,7 @@ Think of async effects like a robot assistant:
 - A search debouncer (like a smart search)
 - A resource cleaner (like a janitor)
 
-### 7. Context API (07-context-api.tsx) 🎭
+### 7. Context API (exercises/07-context-api/) 🎭
 #### What is Context?
 Think of Context like a family tree:
 - Parents share things with children (like passing down traits)
@@ -131,7 +132,7 @@ Think of Context like a family tree:
 - A settings context (like house rules)
 - A language context (like family language)
 
-### 8. Tailwind CSS (08-tailwindcss.tsx) 🎨
+### 8. Tailwind CSS (exercises/08-tailwindcss/) 🎨
 #### What is Tailwind CSS?
 Think of Tailwind like a box of LEGO pieces:
 - Each piece has a specific job (like a color or size)
@@ -145,7 +146,7 @@ Think of Tailwind like a box of LEGO pieces:
 - A navigation bar (like a menu board)
 - A responsive grid (like a photo wall)
 
-### 9. SSR & SSG (09-ssr-ssg.tsx) 🚀
+### 9. SSR & SSG (exercises/09-ssr-ssg/) 🚀
 #### What are SSR & SSG?
 Think of SSR/SSG like a restaurant:
 - SSR (Server-Side Rendering) is like cooking to order
@@ -203,7 +204,7 @@ Run tests for a specific exercise:
 # Run all tests
 pnpm test
 
-# Run tests for a specific exercise
+# Run tests for a specific exercise (by pattern matching)
 pnpm test 01-components
 pnpm test 02-hooks
 pnpm test 03-forms
@@ -244,20 +245,42 @@ pnpm test 09-ssr-ssg
 ### For Advanced Students
 9. **SSR & SSG** - Learn about server-side rendering and static generation
 
+**💡 Pro Tip:** Each exercise folder contains its own detailed README.md with specific instructions, examples, and explanations. Start with the main README (this file) for the big picture, then dive into individual exercise READMEs for detailed guidance!
+
 ## Project Structure 📁
 ```
 exercises/03-react/
 ├── src/
-│   ├── 01-components.tsx        # Building blocks
-│   ├── 02-hooks.tsx             # Special tools
-│   ├── 03-forms.tsx             # Conversations
-│   ├── 04-routing.tsx           # Navigation
-│   ├── 05-state-management.tsx # Memory
-│   ├── 06-async-effects.tsx    # Robot assistants
-│   ├── 07-context-api.tsx      # Family trees
-│   ├── 08-tailwindcss.tsx      # LEGO pieces
-│   ├── 09-ssr-ssg.tsx          # Restaurants
-│   └── main.tsx                 # Control center
+│   ├── exercises/
+│   │   ├── 01-components/
+│   │   │   ├── index.tsx        # Building blocks
+│   │   │   └── README.md        # Exercise guide
+│   │   ├── 02-hooks/
+│   │   │   ├── index.tsx        # Special tools
+│   │   │   └── README.md        # Exercise guide
+│   │   ├── 03-forms/
+│   │   │   ├── index.tsx        # Conversations
+│   │   │   └── README.md        # Exercise guide
+│   │   ├── 04-routing/
+│   │   │   ├── index.tsx        # Navigation
+│   │   │   └── README.md        # Exercise guide
+│   │   ├── 05-state-management/
+│   │   │   ├── index.tsx        # Memory
+│   │   │   └── README.md        # Exercise guide
+│   │   ├── 06-async-effects/
+│   │   │   ├── index.tsx        # Robot assistants
+│   │   │   └── README.md        # Exercise guide
+│   │   ├── 07-context-api/
+│   │   │   ├── index.tsx        # Family trees
+│   │   │   └── README.md        # Exercise guide
+│   │   ├── 08-tailwindcss/
+│   │   │   ├── index.tsx        # LEGO pieces
+│   │   │   └── README.md        # Exercise guide
+│   │   └── 09-ssr-ssg/
+│   │       ├── index.tsx        # Restaurants
+│   │       └── README.md        # Exercise guide
+│   ├── main.tsx                 # Control center
+│   └── index.css               # Global styles
 ├── tests/
 │   └── __tests__/              # Quality control
 ├── package.json                # Toolbox
@@ -328,10 +351,10 @@ git checkout -b feature/react-basics-YOUR_NAME
 cd exercises/03-react
 
 # Install dependencies
-npm install
+pnpm install
 
 # Start the development server
-npm start
+pnpm dev
 ```
 
 Your browser should open to `http://localhost:3000` showing a React app!

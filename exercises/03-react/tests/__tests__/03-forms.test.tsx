@@ -6,7 +6,7 @@ import {
   Form,
   RegistrationForm,
   SurveyForm
-} from '../../src/03-forms';
+} from '../../src/exercises/03-forms';
 
 describe('React Forms', () => {
   describe('useForm', () => {
@@ -27,7 +27,7 @@ describe('React Forms', () => {
 
       const { values, errors, handleChange } = useForm(
         { name: '' },
-        validationRules
+        validationRules as any
       );
 
       handleChange('name', 'Jo');
@@ -38,7 +38,7 @@ describe('React Forms', () => {
     });
 
     it('handles form submission', () => {
-      const onSubmit = vi.fn();
+      const onSubmit = jest.fn();
       const { handleSubmit } = useForm({ name: 'John' });
 
       handleSubmit(onSubmit)();
@@ -109,7 +109,7 @@ describe('React Forms', () => {
     });
 
     it('handles form submission', () => {
-      const onSubmit = vi.fn();
+      const onSubmit = jest.fn();
       render(
         <Form onSubmit={onSubmit}>
           <button type="submit">Submit</button>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { MemoryRouter, Routes, Route } from 'react-router-dom';
+import { MemoryRouter, Routes, Route, useParams, useNavigate } from 'react-router-dom';
 import {
   Navigation,
   Home,
@@ -10,17 +10,14 @@ import {
   Profile,
   Login,
   App
-} from '../../src/04-routing';
+} from '../../src/exercises/04-routing';
 
 // Mock react-router-dom hooks
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual('react-router-dom');
-  return {
-    ...actual,
-    useNavigate: () => vi.fn(),
-    useParams: () => ({ id: '1' })
-  };
-});
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => jest.fn(),
+  useParams: () => ({ id: '1' })
+}));
 
 describe('Navigation', () => {
   it('renders navigation links', () => {
@@ -77,7 +74,7 @@ describe('ProductDetail', () => {
   });
 
   it('shows not found message for invalid product', () => {
-    vi.mocked(useParams).mockReturnValue({ id: '999' });
+    (useParams as jest.Mock).mockReturnValue({ id: '999' });
     
     render(
       <MemoryRouter>
@@ -129,8 +126,8 @@ describe('Profile', () => {
 
 describe('Login', () => {
   it('handles form submission', () => {
-    const navigate = vi.fn();
-    vi.mocked(useNavigate).mockReturnValue(navigate);
+    const navigate = jest.fn();
+    (useNavigate as jest.Mock).mockReturnValue(navigate);
 
     render(
       <MemoryRouter>

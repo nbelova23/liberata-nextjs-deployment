@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { SSRPage, SSGPage } from '../../src/09-ssr-ssg';
+import { SSRPage, SSGPage } from '../../src/exercises/09-ssr-ssg';
 
 describe('SSR & SSG Exercise', () => {
   describe('SSRPage', () => {

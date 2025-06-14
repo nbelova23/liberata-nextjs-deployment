@@ -28,7 +28,12 @@ import React, { useState, useEffect } from 'react';
 //    - increment: Add to number (like scoring a point)
 //    - decrement: Subtract from number (like losing a point)
 //    - reset: Back to start (like starting a new game)
-export function useCounter(initialValue: number = 0, step: number = 1) {
+export function useCounter(initialValue: number = 0, step: number = 1): {
+  count: number;
+  increment: () => void;
+  decrement: () => void;
+  reset: () => void;
+} {
   throw new Error('🚧 TODO: Implement the useCounter hook! Use useState to track a number and return functions to change it.');
 }
 
@@ -41,7 +46,13 @@ export function useCounter(initialValue: number = 0, step: number = 1) {
 //    - start: Start counting (like pressing start)
 //    - pause: Stop counting (like pressing pause)
 //    - reset: Back to start (like resetting the timer)
-export function useTimer(initialSeconds: number, onComplete?: () => void) {
+export function useTimer(initialSeconds: number, onComplete?: () => void): {
+  seconds: number;
+  isRunning: boolean;
+  start: () => void;
+  pause: () => void;
+  reset: () => void;
+} {
   throw new Error('🚧 TODO: Implement the useTimer hook! Use useState and useEffect with setInterval to count down.');
 }
 
@@ -52,7 +63,12 @@ export function useTimer(initialSeconds: number, onComplete?: () => void) {
 //    - loading: Is it getting data? (like "loading...")
 //    - error: Did something go wrong? (like "can't connect")
 //    - refetch: Get data again (like refreshing the page)
-export function useFetch<T>(url: string) {
+export function useFetch<T>(url: string): {
+  data: T | null;
+  loading: boolean;
+  error: string | null;
+  refetch: () => void;
+} {
   throw new Error('🚧 TODO: Implement the useFetch hook! Use useState for data/loading/error and useEffect to fetch.');
 }
 
@@ -67,28 +83,33 @@ export function useFetch<T>(url: string) {
 export function useForm<T extends Record<string, any>>(
   initialValues: T,
   validate?: (values: T) => Record<string, string>
-) {
+): {
+  values: T;
+  errors: Record<string, string>;
+  handleChange: (name: string, value: any) => void;
+  handleSubmit: (onSubmit: (values: T) => void) => () => void;
+} {
   throw new Error('🚧 TODO: Implement the useForm hook! Use useState for values/errors and create handler functions.');
 }
 
 // Additional hooks that tests expect:
-export function useLocalStorage(key: string, initialValue: any) {
+export function useLocalStorage(key: string, initialValue: any): [any, (value: any) => void] {
   throw new Error('🚧 TODO: Implement the useLocalStorage hook! Use useState and useEffect to sync with localStorage.');
 }
 
-export function useDebounce<T>(value: T, delay: number) {
+export function useDebounce<T>(value: T, delay: number): T {
   throw new Error('🚧 TODO: Implement the useDebounce hook! Use useState and useEffect with setTimeout.');
 }
 
-export function useWindowSize() {
+export function useWindowSize(): { width: number; height: number } {
   throw new Error('🚧 TODO: Implement the useWindowSize hook! Use useState and useEffect with window resize listener.');
 }
 
-export function usePrevious<T>(value: T) {
+export function usePrevious<T>(value: T): T | undefined {
   throw new Error('🚧 TODO: Implement the usePrevious hook! Use useRef to store the previous value.');
 }
 
-export function useClickOutside(callback: () => void) {
+export function useClickOutside(callback: () => void): React.RefObject<HTMLDivElement> {
   throw new Error('🚧 TODO: Implement the useClickOutside hook! Use useRef and useEffect with document click listener.');
 }
 

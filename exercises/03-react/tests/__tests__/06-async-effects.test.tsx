@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
-import { FetchUser, PollingTime } from '../../src/06-async-effects';
+import { FetchUser, PollingTime } from '../../src/exercises/06-async-effects';
 
 // Mock fetch for FetchUser
-global.fetch = jest.fn();
+(window as any).fetch = jest.fn();
 
 describe('Async Effects Exercise', () => {
   describe('FetchUser', () => {
@@ -14,7 +14,7 @@ describe('Async Effects Exercise', () => {
 
     it('displays user data on successful fetch', async () => {
       const mockUser = { name: 'John Doe', email: 'john@example.com' };
-      (global.fetch as jest.Mock).mockResolvedValueOnce({
+      (window.fetch as jest.Mock).mockResolvedValueOnce({
         ok: true,
         json: async () => mockUser,
       });
@@ -27,7 +27,7 @@ describe('Async Effects Exercise', () => {
     });
 
     it('shows error state on fetch failure', async () => {
-      (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Failed to fetch'));
+      (window.fetch as jest.Mock).mockRejectedValueOnce(new Error('Failed to fetch'));
 
       render(<FetchUser />);
       await waitFor(() => {

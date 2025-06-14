@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { ThemeToggle, LanguageSelector } from '../../src/07-context-api';
+import { ThemeToggle, LanguageSelector } from '../../src/exercises/07-context-api';
 
 describe('Context API Exercise', () => {
   describe('ThemeToggle', () => {

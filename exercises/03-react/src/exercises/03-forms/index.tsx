@@ -32,7 +32,12 @@ import React from 'react';
 export function useForm<T extends Record<string, any>>(
   initialValues: T,
   validate?: (values: T) => Record<string, string>
-) {
+): {
+  values: T;
+  errors: Record<string, string>;
+  handleChange: (name: string, value: any) => void;
+  handleSubmit: (onSubmit: (values: T) => void) => () => void;
+} {
   throw new Error('🚧 TODO: Implement the useForm hook! Use useState for values/errors and create handler functions.');
 }
 

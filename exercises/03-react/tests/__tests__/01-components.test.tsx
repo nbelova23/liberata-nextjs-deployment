@@ -6,7 +6,7 @@ import {
   UserProfile,
   TodoList,
   SearchInput
-} from '../../src/01-components';
+} from '../../src/exercises/01-components';
 
 describe('React Components', () => {
   describe('Button', () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { ResponsiveCard, CustomButton } from '../../src/08-tailwindcss';
+import { ResponsiveCard, CustomButton } from '../../src/exercises/08-tailwindcss';
 
 describe('Tailwind CSS Exercise', () => {
   describe('ResponsiveCard', () => {

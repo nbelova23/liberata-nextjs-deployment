@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { TodoList, UserProfile, PostsList } from '../../src/05-state-management';
+import { TodoList, DataFetcher, Counter } from '../../src/exercises/05-state-management';
 
 describe('TodoList', () => {
   beforeEach(() => {
@@ -47,9 +47,9 @@ describe('TodoList', () => {
   });
 });
 
-describe('UserProfile', () => {
+describe('DataFetcher', () => {
   it('shows loading state initially', () => {
-    render(<UserProfile />);
+    render(<DataFetcher />);
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 
@@ -60,12 +60,12 @@ describe('UserProfile', () => {
       email: 'john@example.com',
     };
 
-    global.fetch = vi.fn().mockResolvedValue({
+    (window as any).fetch = jest.fn().mockResolvedValue({
       ok: true,
       json: () => Promise.resolve(mockUser),
     });
 
-    render(<UserProfile />);
+    render(<DataFetcher />);
 
     await waitFor(() => {
       expect(screen.getByText('John Doe')).toBeInTheDocument();
@@ -74,9 +74,9 @@ describe('UserProfile', () => {
   });
 
   it('shows error state when fetch fails', async () => {
-    global.fetch = vi.fn().mockRejectedValue(new Error('Failed to fetch'));
+    (window as any).fetch = jest.fn().mockRejectedValue(new Error('Failed to fetch'));
 
-    render(<UserProfile />);
+    render(<DataFetcher />);
 
     await waitFor(() => {
       expect(screen.getByText(/Error:/)).toBeInTheDocument();
@@ -84,53 +84,35 @@ describe('UserProfile', () => {
   });
 });
 
-describe('PostsList', () => {
-  it('shows loading state initially', () => {
-    render(<PostsList />);
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+describe('Counter', () => {
+  it('shows initial count', () => {
+    render(<Counter />);
+    expect(screen.getByText('0')).toBeInTheDocument();
   });
 
-  it('shows posts after loading', async () => {
-    const mockPosts = [
-      { id: 1, title: 'Post 1', body: 'Body 1' },
-      { id: 2, title: 'Post 2', body: 'Body 2' },
-    ];
-
-    global.fetch = vi.fn().mockResolvedValue({
-      ok: true,
-      json: () => Promise.resolve(mockPosts),
-    });
-
-    render(<PostsList />);
-
-    await waitFor(() => {
-      expect(screen.getByText('Post 1')).toBeInTheDocument();
-      expect(screen.getByText('Post 2')).toBeInTheDocument();
-    });
+  it('increments count', () => {
+    render(<Counter />);
+    const incrementButton = screen.getByText('Increment');
+    
+    fireEvent.click(incrementButton);
+    expect(screen.getByText('1')).toBeInTheDocument();
   });
 
-  it('handles pagination', async () => {
-    const mockPosts = [
-      { id: 1, title: 'Post 1', body: 'Body 1' },
-      { id: 2, title: 'Post 2', body: 'Body 2' },
-    ];
+  it('decrements count', () => {
+    render(<Counter />);
+    const decrementButton = screen.getByText('Decrement');
+    
+    fireEvent.click(decrementButton);
+    expect(screen.getByText('-1')).toBeInTheDocument();
+  });
 
-    global.fetch = vi.fn().mockResolvedValue({
-      ok: true,
-      json: () => Promise.resolve(mockPosts),
-    });
-
-    render(<PostsList />);
-
-    await waitFor(() => {
-      expect(screen.getByText('Page 1')).toBeInTheDocument();
-    });
-
-    const nextButton = screen.getByText('Next');
-    fireEvent.click(nextButton);
-
-    await waitFor(() => {
-      expect(screen.getByText('Page 2')).toBeInTheDocument();
-    });
+  it('resets count', () => {
+    render(<Counter />);
+    const incrementButton = screen.getByText('Increment');
+    const resetButton = screen.getByText('Reset');
+    
+    fireEvent.click(incrementButton);
+    fireEvent.click(resetButton);
+    expect(screen.getByText('0')).toBeInTheDocument();
   });
 }); 

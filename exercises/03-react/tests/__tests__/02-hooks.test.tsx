@@ -11,7 +11,7 @@ import {
   ResponsiveComponent,
   PreviousValueComponent,
   Dropdown
-} from '../../src/02-hooks';
+} from '../../src/exercises/02-hooks';
 
 describe('React Hooks', () => {
   describe('useLocalStorage', () => {
@@ -39,11 +39,11 @@ describe('React Hooks', () => {
 
   describe('useDebounce', () => {
     beforeEach(() => {
-      vi.useFakeTimers();
+      jest.useFakeTimers();
     });
 
     afterEach(() => {
-      vi.useRealTimers();
+      jest.useRealTimers();
     });
 
     it('returns initial value immediately', () => {
@@ -61,7 +61,7 @@ describe('React Hooks', () => {
       fireEvent.change(input, { target: { value: 'test' } });
 
       act(() => {
-        vi.advanceTimersByTime(300);
+        jest.advanceTimersByTime(300);
       });
 
       expect(console.log).toHaveBeenCalledWith('Searching for:', 'test');
@@ -105,7 +105,7 @@ describe('React Hooks', () => {
 
   describe('useClickOutside', () => {
     it('calls callback when clicking outside', () => {
-      const callback = vi.fn();
+      const callback = jest.fn();
       const ref = useClickOutside(callback);
 
       render(
@@ -120,7 +120,7 @@ describe('React Hooks', () => {
     });
 
     it('does not call callback when clicking inside', () => {
-      const callback = vi.fn();
+      const callback = jest.fn();
       const ref = useClickOutside(callback);
 
       render(

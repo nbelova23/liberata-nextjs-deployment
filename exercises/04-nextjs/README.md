@@ -83,16 +83,46 @@ exercises/04-nextjs/
 │   ├── _app.tsx             # App configuration (don't touch this)
 │   └── exercises/           # 👈 Your learning exercises are here!
 │       ├── 01-getting-started/
+│       │   ├── index.tsx    # Exercise implementation
+│       │   └── README.md    # Exercise instructions
 │       ├── 02-data-fetching/
+│       │   ├── index.tsx    # Exercise implementation
+│       │   └── README.md    # Exercise instructions
 │       ├── 03-dynamic-routes/
+│       │   ├── index.tsx    # Exercise implementation
+│       │   └── README.md    # Exercise instructions
 │       ├── 04-layouts/
+│       │   ├── index.tsx    # Exercise implementation
+│       │   └── README.md    # Exercise instructions
 │       ├── 05-authentication/
+│       │   ├── index.tsx    # Exercise implementation
+│       │   └── README.md    # Exercise instructions
 │       ├── 06-state-management/
+│       │   ├── index.tsx    # Exercise implementation
+│       │   └── README.md    # Exercise instructions
 │       ├── 07-deployment/
-│       └── 08-testing/
+│       │   ├── index.tsx    # Exercise implementation
+│       │   └── README.md    # Exercise instructions
+│       ├── 08-testing/
+│       │   ├── index.tsx    # Exercise implementation
+│       │   └── README.md    # Exercise instructions
+│       └── index.tsx        # Exercise dashboard
 ├── styles/                   # 👈 How your website looks
 │   └── globals.css          # Colors, fonts, layout
-├── public/                   # 👈 Images and files (add your photos here)
+├── tests/                    # 👈 Test files
+│   └── __tests__/           # Jest test files
+│       └── *.test.tsx       # Individual test files
+├── .next/                    # Next.js build output (auto-generated)
+├── node_modules/             # Dependencies (auto-generated)
+├── jest.config.js           # Jest testing configuration
+├── jest.setup.js            # Jest setup file
+├── next.config.js           # Next.js configuration
+├── next-env.d.ts            # Next.js TypeScript definitions
+├── package.json             # Dependencies and scripts
+├── pnpm-lock.yaml           # Package lock file
+├── postcss.config.js        # PostCSS configuration
+├── tailwind.config.js       # Tailwind CSS configuration
+├── tsconfig.json            # TypeScript configuration
 └── README.md                # This guide
 ```
 
@@ -438,65 +468,78 @@ By the end of this exercise, you'll understand:
 
 **Real-world analogy:** If React is like having individual LEGO pieces, Next.js is like having pre-built LEGO sets with instructions - you can still customize everything, but you get a head start with proven patterns.
 
-## 🚀 Quick Start (20 Minutes)
+## 🚀 Quick Start (5 Minutes)
 
-### Step 1: Create Your Next.js Project
+### Step 1: Start the Development Server
 
 ```bash
-# Create a new branch for this exercise
-git checkout -b feature/nextjs-basics-YOUR_NAME
-
 # Navigate to the Next.js exercise directory
 cd exercises/04-nextjs
 
-# Create a new Next.js app with TypeScript
-npx create-next-app@latest my-nextjs-app --typescript --tailwind --eslint --app
-
-# Navigate into your project
-cd my-nextjs-app
+# Install dependencies
+pnpm install
 
 # Start the development server
-npm run dev
+pnpm dev
 ```
 
-Your browser should open to `http://localhost:3000` showing your Next.js app!
+Your browser should open to `http://localhost:3000` showing the Next.js exercises dashboard!
 
-### Step 2: Understand the Project Structure
+### Step 2: Explore the Project Structure
 
 ```
-my-nextjs-app/
-├── app/                 # App Router (Next.js 13+)
-│   ├── globals.css     # Global styles
-│   ├── layout.tsx      # Root layout
-│   ├── page.tsx        # Home page
-│   └── favicon.ico     # Favicon
-├── public/             # Static assets
-├── next.config.js      # Next.js configuration
-├── package.json        # Dependencies
-└── tsconfig.json       # TypeScript configuration
+exercises/04-nextjs/
+├── pages/
+│   ├── exercises/
+│   │   ├── 01-getting-started/    # Basic Next.js concepts
+│   │   │   ├── index.tsx          # Exercise implementation
+│   │   │   └── README.md          # Exercise instructions
+│   │   ├── 02-data-fetching/      # SSG, SSR, and API routes
+│   │   │   ├── index.tsx          # Exercise implementation
+│   │   │   └── README.md          # Exercise instructions
+│   │   ├── 03-dynamic-routes/     # Dynamic routing
+│   │   │   ├── index.tsx          # Exercise implementation
+│   │   │   └── README.md          # Exercise instructions
+│   │   ├── 04-layouts/            # Layouts and components
+│   │   │   ├── index.tsx          # Exercise implementation
+│   │   │   └── README.md          # Exercise instructions
+│   │   ├── 05-authentication/     # User authentication
+│   │   │   ├── index.tsx          # Exercise implementation
+│   │   │   └── README.md          # Exercise instructions
+│   │   ├── 06-state-management/   # Global state management
+│   │   │   ├── index.tsx          # Exercise implementation
+│   │   │   └── README.md          # Exercise instructions
+│   │   ├── 07-deployment/         # Deployment strategies
+│   │   │   ├── index.tsx          # Exercise implementation
+│   │   │   └── README.md          # Exercise instructions
+│   │   ├── 08-testing/            # Testing Next.js apps
+│   │   │   ├── index.tsx          # Exercise implementation
+│   │   │   └── README.md          # Exercise instructions
+│   │   └── index.tsx              # Exercise dashboard
+│   ├── index.tsx                  # Main home page
+│   └── _app.tsx                   # App configuration
+├── styles/
+│   └── globals.css                # Global styles
+├── tests/
+│   └── __tests__/                 # Jest test files
+│       └── *.test.tsx             # Individual test files
+├── jest.config.js                 # Jest testing configuration
+├── jest.setup.js                  # Jest setup file
+├── next.config.js                 # Next.js configuration
+├── package.json                   # Dependencies and scripts
+├── postcss.config.js              # PostCSS configuration
+├── tailwind.config.js             # Tailwind CSS configuration
+└── tsconfig.json                  # TypeScript configuration
 ```
 
-### Step 3: Create Your First Page
+### Step 3: Navigate the Exercises
 
-Create `app/about/page.tsx`:
+1. **Visit the Dashboard**: Go to `http://localhost:3000` to see all available exercises
+2. **Select an Exercise**: Click on any exercise to view it
+3. **Read the Instructions**: Each exercise has detailed README files with step-by-step guidance
+4. **Make Changes**: Edit the code and see changes instantly with hot reload
 
-```typescript
-export default function About() {
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-4">About Me</h1>
-      <p className="text-lg">
-        Welcome to my Next.js learning journey! This page was created using 
-        Next.js file-based routing.
-      </p>
-    </div>
-  );
-}
-```
-
-Visit `http://localhost:3000/about` to see your new page!
-
-Congratulations! You've created your first Next.js application with routing! 🎉
+Congratulations! You're ready to start learning Next.js with hands-on exercises! 🎉
 
 ## 🎬 YouTube Tutorials
 
