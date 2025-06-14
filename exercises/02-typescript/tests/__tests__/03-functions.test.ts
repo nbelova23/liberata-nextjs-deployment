@@ -1,4 +1,4 @@
-import { describe, it, expect } from '@jest/globals';
+// Jest globals are available by default
 import {
   calculateArea,
   calculateTotalArea,
