@@ -75,6 +75,45 @@ Every app with user data needs security:
 
 ---
 
+## 🎬 YouTube Tutorials
+
+Here are excellent tutorials to help you master Supabase and database security:
+
+### Supabase Fundamentals
+- **[Supabase Tutorial for Beginners](https://www.youtube.com/watch?v=WdA6b0jPNv4)** by Net Ninja (2.5 hours) ⭐ **RECOMMENDED**
+  - Comprehensive Supabase course perfect for beginners
+  - Covers database setup, authentication, and RLS
+  - Step-by-step approach with practical examples
+  - Excellent for understanding all Supabase features
+
+### Database Security & RLS
+- **[Row Level Security Explained](https://www.youtube.com/watch?v=Ow_Uzedfohk)** by Supabase (15 minutes)
+  - Official explanation of Row Level Security
+  - Shows practical examples and use cases
+  - Perfect for understanding RLS concepts
+
+### Authentication & Security
+- **[Supabase Auth Tutorial](https://www.youtube.com/watch?v=6ow_jW4epf8)** by Traversy Media (45 minutes)
+  - Covers user authentication with Supabase
+  - Shows how auth integrates with RLS
+  - Practical implementation examples
+
+### Database Fundamentals
+- **[PostgreSQL Crash Course](https://www.youtube.com/watch?v=qw--VYLpxG4)** by Traversy Media (1.5 hours)
+  - Essential PostgreSQL concepts
+  - Helps understand the database behind Supabase
+  - Great for SQL fundamentals
+
+### Real-time Features
+- **[Supabase Realtime Tutorial](https://www.youtube.com/watch?v=CGZr5tybW18)** by Supabase (20 minutes)
+  - Learn about real-time subscriptions
+  - Shows how to build live applications
+  - Perfect for understanding Exercise 3
+
+**💡 Tip:** Start with the recommended Net Ninja tutorial for comprehensive learning, then dive into specific topics with the shorter videos.
+
+---
+
 ## 🎯 Key Concepts (Simple Explanations)
 
 ### 1. Tables = Organized Drawers

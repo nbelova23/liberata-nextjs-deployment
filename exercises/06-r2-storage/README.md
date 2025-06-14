@@ -143,6 +143,39 @@ Think of R2 as **Google Drive for developers**. But instead of clicking and drag
 
 ---
 
+## 🎬 YouTube Tutorials
+
+Here are excellent tutorials to help you master R2 Storage and object storage concepts:
+
+### R2 Storage Fundamentals
+- **[Cloudflare R2 Storage Tutorial](https://www.youtube.com/watch?v=2qq94qs1ZmM)** by Cloudflare (15 minutes) ⭐ **RECOMMENDED**
+  - Official introduction to R2 Storage
+  - Covers basic concepts and use cases
+  - Shows integration with Workers
+  - Perfect starting point for understanding R2
+
+### Object Storage Concepts
+- **[What is Object Storage?](https://www.youtube.com/watch?v=SqcY0GlETPk)** by IBM Technology (8 minutes)
+  - Excellent explanation of object storage vs other storage types
+  - Helps understand when to use object storage
+  - Clear analogies and examples
+
+### Practical Implementation
+- **[Building with Cloudflare R2](https://www.youtube.com/watch?v=NlXfg5Pxxh8)** by Cloudflare Developers (30 minutes)
+  - Hands-on tutorial building with R2
+  - Covers file uploads, downloads, and management
+  - Integration with Workers and web applications
+
+### File Storage Best Practices
+- **[Cloud Storage Explained](https://www.youtube.com/watch?v=Ia-UEYYR44s)** by Fireship (5 minutes)
+  - Quick overview of different cloud storage options
+  - Helps understand when to use object storage vs databases
+  - Great for understanding the bigger picture
+
+**💡 Tip:** Start with the recommended Cloudflare R2 tutorial to get the big picture, then explore the object storage concepts for deeper understanding.
+
+---
+
 ## 🎯 Key Concepts (Simple Explanations)
 
 ### 1. Buckets = Folders

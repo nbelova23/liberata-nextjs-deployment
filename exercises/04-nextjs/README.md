@@ -404,3 +404,511 @@ By completing these exercises, you've learned:
 - **Modern**: Uses the latest web development practices
 
 **You're learning the same tools used by Netflix, Facebook, and thousands of other companies!** 🚀 
+
+# Next.js Fundamentals
+
+> **Completion Time:** 2.5 hours  
+> **Prerequisites:** React basics, TypeScript fundamentals
+
+Learn Next.js, the React framework that makes building production-ready web applications easier with built-in features like routing, server-side rendering, and API routes.
+
+## 🎯 What You'll Learn
+
+By the end of this exercise, you'll understand:
+- What Next.js is and why it's popular
+- File-based routing system
+- Pages and layouts
+- Server-side rendering (SSR) vs Static generation (SSG)
+- API routes for backend functionality
+- Image optimization with Next.js Image component
+- Deployment with Vercel
+- How to build a full-stack application
+
+## 📖 Background
+
+**Next.js** is a React framework that gives you building blocks to create web applications. Think of it as React with superpowers - it handles all the complex setup and gives you powerful features out of the box.
+
+**Key Benefits:**
+- **File-based Routing** - No need to configure routes manually
+- **Server-Side Rendering** - Better SEO and performance
+- **Static Site Generation** - Lightning-fast websites
+- **API Routes** - Build backend functionality in the same project
+- **Image Optimization** - Automatic image optimization
+- **Built-in CSS Support** - CSS Modules, Sass, and more
+
+**Real-world analogy:** If React is like having individual LEGO pieces, Next.js is like having pre-built LEGO sets with instructions - you can still customize everything, but you get a head start with proven patterns.
+
+## 🚀 Quick Start (20 Minutes)
+
+### Step 1: Create Your Next.js Project
+
+```bash
+# Create a new branch for this exercise
+git checkout -b feature/nextjs-basics-YOUR_NAME
+
+# Navigate to the Next.js exercise directory
+cd exercises/04-nextjs
+
+# Create a new Next.js app with TypeScript
+npx create-next-app@latest my-nextjs-app --typescript --tailwind --eslint --app
+
+# Navigate into your project
+cd my-nextjs-app
+
+# Start the development server
+npm run dev
+```
+
+Your browser should open to `http://localhost:3000` showing your Next.js app!
+
+### Step 2: Understand the Project Structure
+
+```
+my-nextjs-app/
+├── app/                 # App Router (Next.js 13+)
+│   ├── globals.css     # Global styles
+│   ├── layout.tsx      # Root layout
+│   ├── page.tsx        # Home page
+│   └── favicon.ico     # Favicon
+├── public/             # Static assets
+├── next.config.js      # Next.js configuration
+├── package.json        # Dependencies
+└── tsconfig.json       # TypeScript configuration
+```
+
+### Step 3: Create Your First Page
+
+Create `app/about/page.tsx`:
+
+```typescript
+export default function About() {
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-4xl font-bold mb-4">About Me</h1>
+      <p className="text-lg">
+        Welcome to my Next.js learning journey! This page was created using 
+        Next.js file-based routing.
+      </p>
+    </div>
+  );
+}
+```
+
+Visit `http://localhost:3000/about` to see your new page!
+
+Congratulations! You've created your first Next.js application with routing! 🎉
+
+## 🎬 YouTube Tutorials
+
+Here are excellent tutorials to help you master Next.js:
+
+### Next.js Fundamentals
+- **[Next.js Tutorial for Beginners](https://www.youtube.com/watch?v=xnOwOBYaA3w)** by Dave Gray (4.5 hours) ⭐ **RECOMMENDED**
+  - Comprehensive Next.js course perfect for beginners
+  - Covers App Router, routing, server components, and more
+  - Hands-on project building approach
+  - Up-to-date with latest Next.js features
+
+### Next.js Quick Start
+- **[Next.js in 100 Seconds](https://www.youtube.com/watch?v=Sklc_fQBmcs)** by Fireship (100 seconds)
+  - Lightning-fast overview of Next.js concepts
+  - Perfect for getting the big picture quickly
+
+- **[Next.js Crash Course](https://www.youtube.com/watch?v=mTz0GXj8NN0)** by Traversy Media (1 hour)
+  - Quick but comprehensive introduction
+  - Covers essential Next.js features
+  - Great for developers familiar with React
+
+### Next.js Deep Dive
+- **[Next.js 13 Full Course](https://www.youtube.com/watch?v=__mSgDEOyv8)** by JavaScript Mastery (5 hours)
+  - In-depth coverage of Next.js 13+ features
+  - Includes App Router and Server Components
+  - Build real-world projects
+
+### Next.js with TypeScript
+- **[Next.js + TypeScript Tutorial](https://www.youtube.com/watch?v=1WmNXEVia8I)** by Codevolution (45 minutes)
+  - Essential for TypeScript developers
+  - Shows how to properly type Next.js applications
+
+### Next.js Deployment
+- **[Deploy Next.js to Vercel](https://www.youtube.com/watch?v=2HBIzEx6IZA)** by Vercel (15 minutes)
+  - Official guide to deploying Next.js apps
+  - Free hosting with automatic deployments
+
+**💡 Tip:** Start with the recommended Dave Gray tutorial for comprehensive learning, then explore specific topics with the shorter videos.
+
+## 📚 Core Next.js Concepts
+
+### 1. File-Based Routing
+
+```typescript
+// app/page.tsx (Home page - /)
+export default function Home() {
+  return <h1>Welcome to Next.js!</h1>;
+}
+
+// app/about/page.tsx (About page - /about)
+export default function About() {
+  return <h1>About Us</h1>;
+}
+
+// app/blog/[slug]/page.tsx (Dynamic route - /blog/my-post)
+interface BlogPostProps {
+  params: {
+    slug: string;
+  };
+}
+
+export default function BlogPost({ params }: BlogPostProps) {
+  return <h1>Blog Post: {params.slug}</h1>;
+}
+```
+
+### 2. Layouts
+
+```typescript
+// app/layout.tsx (Root layout)
+import './globals.css';
+
+export const metadata = {
+  title: 'My Next.js App',
+  description: 'Learning Next.js fundamentals',
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <nav className="bg-blue-600 text-white p-4">
+          <h1>My App</h1>
+        </nav>
+        <main>{children}</main>
+        <footer className="bg-gray-800 text-white p-4 text-center">
+          © 2024 My Next.js App
+        </footer>
+      </body>
+    </html>
+  );
+}
+```
+
+### 3. Server Components vs Client Components
+
+```typescript
+// app/server-component.tsx (Server Component - default)
+async function getUsers() {
+  const res = await fetch('https://jsonplaceholder.typicode.com/users');
+  return res.json();
+}
+
+export default async function UserList() {
+  const users = await getUsers();
+  
+  return (
+    <div>
+      <h2>Users (Server Component)</h2>
+      <ul>
+        {users.map((user: any) => (
+          <li key={user.id}>{user.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+// app/client-component.tsx (Client Component)
+'use client';
+
+import { useState } from 'react';
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <h2>Counter (Client Component)</h2>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>
+        Increment
+      </button>
+    </div>
+  );
+}
+```
+
+### 4. API Routes
+
+```typescript
+// app/api/users/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+
+// GET /api/users
+export async function GET() {
+  const users = [
+    { id: 1, name: 'John Doe', email: 'john@example.com' },
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com' },
+  ];
+
+  return NextResponse.json(users);
+}
+
+// POST /api/users
+export async function POST(request: NextRequest) {
+  const body = await request.json();
+  
+  // In a real app, you'd save to a database
+  const newUser = {
+    id: Date.now(),
+    name: body.name,
+    email: body.email,
+  };
+
+  return NextResponse.json(newUser, { status: 201 });
+}
+```
+
+### 5. Image Optimization
+
+```typescript
+import Image from 'next/image';
+
+export default function ProfilePage() {
+  return (
+    <div>
+      <h1>My Profile</h1>
+      
+      {/* Optimized image with Next.js Image component */}
+      <Image
+        src="/profile-picture.jpg"
+        alt="Profile Picture"
+        width={300}
+        height={300}
+        className="rounded-full"
+        priority // Load this image first
+      />
+      
+      {/* External image */}
+      <Image
+        src="https://example.com/avatar.jpg"
+        alt="Avatar"
+        width={100}
+        height={100}
+        className="rounded"
+      />
+    </div>
+  );
+}
+```
+
+### 6. Data Fetching
+
+```typescript
+// Static Generation (SSG) - Generated at build time
+export default async function StaticPage() {
+  const data = await fetch('https://api.example.com/data', {
+    cache: 'force-cache' // This is the default
+  });
+  const posts = await data.json();
+
+  return (
+    <div>
+      <h1>Static Posts</h1>
+      {posts.map((post: any) => (
+        <article key={post.id}>
+          <h2>{post.title}</h2>
+          <p>{post.content}</p>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+// Server-Side Rendering (SSR) - Generated on each request
+export default async function DynamicPage() {
+  const data = await fetch('https://api.example.com/live-data', {
+    cache: 'no-store' // Always fetch fresh data
+  });
+  const liveData = await data.json();
+
+  return (
+    <div>
+      <h1>Live Data</h1>
+      <p>Last updated: {new Date().toLocaleString()}</p>
+      <pre>{JSON.stringify(liveData, null, 2)}</pre>
+    </div>
+  );
+}
+```
+
+## 🛠️ Hands-On Project: Student Portal
+
+Build a student portal that demonstrates Next.js features:
+
+### Project Features
+
+1. **Home Page** (`/`) - Welcome page with navigation
+2. **Students List** (`/students`) - Display all students
+3. **Student Profile** (`/students/[id]`) - Individual student details
+4. **Add Student** (`/students/new`) - Form to add new students
+5. **API Routes** (`/api/students`) - Backend for student data
+6. **About Page** (`/about`) - Static page with information
+
+### Project Structure
+
+```typescript
+// types/Student.ts
+export interface Student {
+  id: number;
+  name: string;
+  email: string;
+  major: string;
+  year: number;
+  gpa: number;
+}
+
+// app/students/page.tsx
+import Link from 'next/link';
+
+async function getStudents() {
+  const res = await fetch('http://localhost:3000/api/students');
+  return res.json();
+}
+
+export default async function StudentsPage() {
+  const students = await getStudents();
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-6">Students</h1>
+      
+      <Link 
+        href="/students/new"
+        className="bg-blue-500 text-white px-4 py-2 rounded mb-4 inline-block"
+      >
+        Add New Student
+      </Link>
+
+      <div className="grid gap-4">
+        {students.map((student: Student) => (
+          <div key={student.id} className="border p-4 rounded">
+            <h3 className="text-xl font-semibold">{student.name}</h3>
+            <p>Major: {student.major}</p>
+            <p>Year: {student.year}</p>
+            <Link 
+              href={`/students/${student.id}`}
+              className="text-blue-500 hover:underline"
+            >
+              View Details
+            </Link>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+### Implementation Tasks
+
+- [ ] Set up the project structure
+- [ ] Create the home page with navigation
+- [ ] Implement the students list page
+- [ ] Create dynamic student profile pages
+- [ ] Build the add student form
+- [ ] Implement API routes for CRUD operations
+- [ ] Add proper TypeScript types
+- [ ] Style with Tailwind CSS
+- [ ] Deploy to Vercel
+
+## 🔍 Next.js Best Practices
+
+### 1. Use Server Components by Default
+
+```typescript
+// ✅ Good - Server Component (default)
+export default async function ProductList() {
+  const products = await fetchProducts();
+  return <div>{/* render products */}</div>;
+}
+
+// ✅ Good - Client Component when needed
+'use client';
+export default function InteractiveButton() {
+  const [clicked, setClicked] = useState(false);
+  return <button onClick={() => setClicked(true)}>Click me</button>;
+}
+```
+
+### 2. Optimize Images
+
+```typescript
+// ✅ Good - Use Next.js Image component
+import Image from 'next/image';
+
+<Image
+  src="/hero.jpg"
+  alt="Hero image"
+  width={800}
+  height={400}
+  priority
+/>
+
+// ❌ Avoid - Regular img tag
+<img src="/hero.jpg" alt="Hero image" />
+```
+
+### 3. Use Proper Metadata
+
+```typescript
+// app/blog/[slug]/page.tsx
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const post = await getPost(params.slug);
+  
+  return {
+    title: post.title,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      images: [post.image],
+    },
+  };
+}
+```
+
+## ✅ Success Criteria
+
+- [ ] Understand the difference between Next.js and React
+- [ ] Can create pages using file-based routing
+- [ ] Successfully implemented dynamic routes
+- [ ] Created both server and client components
+- [ ] Built API routes for backend functionality
+- [ ] Used Next.js Image component for optimization
+- [ ] Implemented proper layouts and metadata
+- [ ] Completed the student portal project
+- [ ] Successfully deployed to Vercel
+
+## 🚀 Bonus Challenges
+
+1. **Authentication:** Add user authentication with NextAuth.js
+2. **Database Integration:** Connect to a database (PostgreSQL, MongoDB)
+3. **Middleware:** Implement route protection and redirects
+4. **Internationalization:** Add multi-language support
+5. **Performance:** Implement caching strategies and optimization
+
+## 🎉 What's Next?
+
+You're now ready to learn about **Edge Workers** and **Cloudflare Workers**, which will teach you about serverless computing and edge computing concepts that complement Next.js applications!
+
+## 💡 Pro Tips
+
+- **Use Server Components** when possible for better performance
+- **Client Components** only when you need interactivity
+- **Optimize images** with the Next.js Image component
+- **Use TypeScript** for better development experience
+- **Deploy early and often** to catch issues quickly
+- **Read the Next.js docs** - they're excellent and always up-to-date 

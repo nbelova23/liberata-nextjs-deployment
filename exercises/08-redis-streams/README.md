@@ -567,4 +567,553 @@ docker exec -it redis-streams redis-cli
 
 *Made with ❤️ for Duke students learning web development*
 
-*📨 Remember: Reliable message processing is the backbone of modern distributed systems!* 
+*📨 Remember: Reliable message processing is the backbone of modern distributed systems!*
+
+# Redis Streams & Message Queues
+
+> **Completion Time:** 1.5 hours  
+> **Prerequisites:** Basic understanding of databases, JavaScript/TypeScript
+
+Learn Redis Streams, a powerful data structure for building real-time applications, message queues, and event-driven systems. This exercise covers message streaming fundamentals and building scalable communication systems.
+
+## 🎯 What You'll Learn
+
+By the end of this exercise, you'll understand:
+- What message queues and streams are
+- How Redis Streams work for real-time data
+- Building producer-consumer patterns
+- Handling message acknowledgments and retries
+- Creating consumer groups for scalability
+- Implementing event-driven architectures
+- Real-world applications of message streaming
+
+## 📖 Background
+
+**Message Queues** are like a postal service for your applications. Instead of components talking directly to each other, they send messages through a queue system.
+
+**Redis Streams** are Redis's solution for handling streams of data in real-time. Think of it as a super-fast, persistent message log that multiple applications can read from.
+
+**Key Benefits:**
+- **Asynchronous Processing** - Don't wait for slow operations
+- **Scalability** - Handle millions of messages per second
+- **Reliability** - Messages are persisted and can be replayed
+- **Real-time** - Process events as they happen
+- **Decoupling** - Components don't need to know about each other
+
+**Real-world analogy:** Redis Streams are like a high-speed conveyor belt in a factory. Workers (consumers) can pick up items (messages) from the belt to process them, and if a worker is busy, the items keep moving for other workers to handle.
+
+## 🚀 Quick Start (15 Minutes)
+
+### Step 1: Set Up Redis
+
+```bash
+# Create a new branch for this exercise
+git checkout -b feature/redis-streams-YOUR_NAME
+
+# Navigate to the Redis exercise directory
+cd exercises/08-redis-streams
+
+# Install dependencies
+pnpm install
+
+# Start Redis using Docker (easiest way)
+docker run -d --name redis-streams -p 6379:6379 redis:latest
+
+# Or install Redis locally (macOS)
+brew install redis
+brew services start redis
+
+# Or install Redis locally (Ubuntu/WSL)
+sudo apt update
+sudo apt install redis-server
+sudo systemctl start redis-server
+```
+
+### Step 2: Test Your Redis Connection
+
+```bash
+# Test Redis connection
+redis-cli ping
+# Should return: PONG
+
+# Or test with our exercise
+pnpm start
+```
+
+### Step 3: Your First Stream
+
+Let's create a simple message stream:
+
+```bash
+# Open Redis CLI
+redis-cli
+
+# Add a message to a stream
+XADD mystream * message "Hello Redis Streams!" timestamp 1640995200
+
+# Read messages from the stream
+XREAD STREAMS mystream 0
+
+# See stream info
+XINFO STREAM mystream
+```
+
+Congratulations! You've created your first Redis Stream! 🎉
+
+## 🎬 YouTube Tutorials
+
+Here are excellent tutorials to help you master Redis Streams and message queues:
+
+### Redis Streams Fundamentals
+- **[Redis Streams Tutorial](https://www.youtube.com/watch?v=oaJq1mQ3dFI)** by Redis (25 minutes) ⭐ **RECOMMENDED**
+  - Official Redis tutorial on Streams
+  - Covers core concepts and practical examples
+  - Perfect introduction to Redis Streams
+  - Shows real-world use cases
+
+### Message Queue Concepts
+- **[Message Queues Explained](https://www.youtube.com/watch?v=sfQwMu0SCT8)** by Fireship (8 minutes)
+  - Quick overview of message queue concepts
+  - Compares different message queue systems
+  - Great for understanding the bigger picture
+
+### Redis Fundamentals
+- **[Redis Crash Course](https://www.youtube.com/watch?v=jgpVdJB2sKQ)** by Traversy Media (1 hour)
+  - Comprehensive Redis introduction
+  - Covers data structures and basic operations
+  - Essential foundation for understanding Streams
+
+### Advanced Redis Streams
+- **[Building Event-Driven Systems with Redis Streams](https://www.youtube.com/watch?v=tMQlMOzKn-E)** by Redis (45 minutes)
+  - Advanced patterns and architectures
+  - Consumer groups and scaling strategies
+  - Production-ready implementations
+
+### Practical Applications
+- **[Real-time Chat with Redis Streams](https://www.youtube.com/watch?v=miK7xDkDXF0)** by Redis University (30 minutes)
+  - Hands-on project building a chat system
+  - Shows practical Redis Streams usage
+  - Great for understanding real-world applications
+
+**💡 Tip:** Start with the recommended Redis Streams tutorial to understand the fundamentals, then explore message queue concepts for broader context.
+
+## 📚 Core Redis Streams Concepts
+
+### 1. Basic Stream Operations
+
+```javascript
+import Redis from 'ioredis';
+
+const redis = new Redis({
+  host: 'localhost',
+  port: 6379,
+});
+
+// Add messages to a stream
+async function addMessage(streamName: string, data: Record<string, any>) {
+  const messageId = await redis.xadd(
+    streamName,
+    '*', // Auto-generate ID
+    'data', JSON.stringify(data),
+    'timestamp', Date.now()
+  );
+  
+  console.log(`Added message ${messageId} to ${streamName}`);
+  return messageId;
+}
+
+// Read messages from a stream
+async function readMessages(streamName: string, fromId: string = '0') {
+  const messages = await redis.xread(
+    'STREAMS',
+    streamName,
+    fromId
+  );
+  
+  return messages;
+}
+
+// Example usage
+await addMessage('user-events', { 
+  userId: '123', 
+  action: 'login', 
+  ip: '192.168.1.1' 
+});
+
+const messages = await readMessages('user-events');
+console.log('Messages:', messages);
+```
+
+### 2. Consumer Groups (Team Processing)
+
+```javascript
+// Create a consumer group
+async function createConsumerGroup(streamName: string, groupName: string) {
+  try {
+    await redis.xgroup('CREATE', streamName, groupName, '0', 'MKSTREAM');
+    console.log(`Created consumer group: ${groupName}`);
+  } catch (error) {
+    if (error.message.includes('BUSYGROUP')) {
+      console.log(`Consumer group ${groupName} already exists`);
+    } else {
+      throw error;
+    }
+  }
+}
+
+// Read messages as part of a consumer group
+async function readAsConsumer(
+  streamName: string, 
+  groupName: string, 
+  consumerName: string
+) {
+  const messages = await redis.xreadgroup(
+    'GROUP', groupName, consumerName,
+    'COUNT', 10,
+    'BLOCK', 1000, // Wait 1 second for new messages
+    'STREAMS', streamName, '>'
+  );
+  
+  return messages;
+}
+
+// Acknowledge message processing
+async function acknowledgeMessage(
+  streamName: string, 
+  groupName: string, 
+  messageId: string
+) {
+  await redis.xack(streamName, groupName, messageId);
+  console.log(`Acknowledged message: ${messageId}`);
+}
+
+// Example: Processing messages in a team
+await createConsumerGroup('orders', 'order-processors');
+
+const messages = await readAsConsumer('orders', 'order-processors', 'worker-1');
+for (const [stream, streamMessages] of messages) {
+  for (const [messageId, fields] of streamMessages) {
+    // Process the message
+    console.log(`Processing message ${messageId}:`, fields);
+    
+    // Acknowledge when done
+    await acknowledgeMessage('orders', 'order-processors', messageId);
+  }
+}
+```
+
+### 3. Event-Driven Architecture
+
+```javascript
+// Event producer
+class EventProducer {
+  constructor(private redis: Redis) {}
+  
+  async publishEvent(eventType: string, data: any) {
+    const event = {
+      type: eventType,
+      data: JSON.stringify(data),
+      timestamp: Date.now(),
+      id: crypto.randomUUID()
+    };
+    
+    const messageId = await this.redis.xadd(
+      'events',
+      '*',
+      ...Object.entries(event).flat()
+    );
+    
+    console.log(`Published ${eventType} event: ${messageId}`);
+    return messageId;
+  }
+}
+
+// Event consumer
+class EventConsumer {
+  constructor(
+    private redis: Redis,
+    private consumerName: string,
+    private handlers: Map<string, (data: any) => Promise<void>>
+  ) {}
+  
+  async start() {
+    // Create consumer group if it doesn't exist
+    try {
+      await this.redis.xgroup('CREATE', 'events', 'event-processors', '0', 'MKSTREAM');
+    } catch (error) {
+      // Group already exists
+    }
+    
+    console.log(`Starting consumer: ${this.consumerName}`);
+    
+    while (true) {
+      try {
+        const messages = await this.redis.xreadgroup(
+          'GROUP', 'event-processors', this.consumerName,
+          'COUNT', 10,
+          'BLOCK', 1000,
+          'STREAMS', 'events', '>'
+        );
+        
+        for (const [stream, streamMessages] of messages) {
+          for (const [messageId, fields] of streamMessages) {
+            await this.processMessage(messageId, fields);
+          }
+        }
+      } catch (error) {
+        console.error('Error reading messages:', error);
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+    }
+  }
+  
+  private async processMessage(messageId: string, fields: string[]) {
+    try {
+      // Convert fields array to object
+      const event: any = {};
+      for (let i = 0; i < fields.length; i += 2) {
+        event[fields[i]] = fields[i + 1];
+      }
+      
+      const handler = this.handlers.get(event.type);
+      if (handler) {
+        const data = JSON.parse(event.data);
+        await handler(data);
+        
+        // Acknowledge successful processing
+        await this.redis.xack('events', 'event-processors', messageId);
+        console.log(`Processed ${event.type} event: ${messageId}`);
+      } else {
+        console.log(`No handler for event type: ${event.type}`);
+        // Still acknowledge to avoid reprocessing
+        await this.redis.xack('events', 'event-processors', messageId);
+      }
+    } catch (error) {
+      console.error(`Error processing message ${messageId}:`, error);
+      // Don't acknowledge - message will be retried
+    }
+  }
+}
+
+// Usage example
+const producer = new EventProducer(redis);
+const consumer = new EventConsumer(redis, 'worker-1', new Map([
+  ['user.registered', async (data) => {
+    console.log('Sending welcome email to:', data.email);
+    // Send welcome email logic here
+  }],
+  ['order.created', async (data) => {
+    console.log('Processing new order:', data.orderId);
+    // Order processing logic here
+  }]
+]));
+
+// Start consuming events
+consumer.start();
+
+// Publish some events
+await producer.publishEvent('user.registered', { 
+  userId: '123', 
+  email: 'user@example.com' 
+});
+
+await producer.publishEvent('order.created', { 
+  orderId: 'order-456', 
+  amount: 99.99 
+});
+```
+
+### 4. Stream Monitoring and Management
+
+```javascript
+// Get stream information
+async function getStreamInfo(streamName: string) {
+  const info = await redis.xinfo('STREAM', streamName);
+  
+  return {
+    length: info[1], // Number of messages
+    firstEntry: info[11],
+    lastEntry: info[13],
+    groups: info[15] // Number of consumer groups
+  };
+}
+
+// Get consumer group information
+async function getGroupInfo(streamName: string, groupName: string) {
+  const groups = await redis.xinfo('GROUPS', streamName);
+  return groups.find(group => group[1] === groupName);
+}
+
+// Get pending messages (unacknowledged)
+async function getPendingMessages(streamName: string, groupName: string) {
+  const pending = await redis.xpending(streamName, groupName);
+  return {
+    count: pending[0],
+    firstId: pending[1],
+    lastId: pending[2],
+    consumers: pending[3]
+  };
+}
+
+// Trim stream to manage memory
+async function trimStream(streamName: string, maxLength: number) {
+  await redis.xtrim(streamName, 'MAXLEN', '~', maxLength);
+  console.log(`Trimmed ${streamName} to ~${maxLength} messages`);
+}
+
+// Example monitoring
+const info = await getStreamInfo('events');
+console.log(`Stream has ${info.length} messages`);
+
+if (info.length > 10000) {
+  await trimStream('events', 5000);
+}
+```
+
+## 🛠️ Hands-On Project: Real-time Notification System
+
+Build a complete notification system using Redis Streams:
+
+### Project Features
+
+1. **Event Publishing** - Publish user events (login, purchase, etc.)
+2. **Email Notifications** - Send emails for important events
+3. **Push Notifications** - Send mobile push notifications
+4. **SMS Alerts** - Send SMS for critical events
+5. **Analytics** - Track event metrics
+6. **Dead Letter Queue** - Handle failed messages
+
+### Implementation
+
+```typescript
+interface NotificationEvent {
+  userId: string;
+  type: 'email' | 'push' | 'sms';
+  priority: 'low' | 'medium' | 'high' | 'critical';
+  template: string;
+  data: Record<string, any>;
+}
+
+class NotificationSystem {
+  constructor(private redis: Redis) {}
+  
+  async publishNotification(event: NotificationEvent) {
+    const streamName = `notifications:${event.priority}`;
+    
+    const messageId = await this.redis.xadd(
+      streamName,
+      '*',
+      'userId', event.userId,
+      'type', event.type,
+      'template', event.template,
+      'data', JSON.stringify(event.data),
+      'timestamp', Date.now()
+    );
+    
+    console.log(`Published ${event.type} notification: ${messageId}`);
+    return messageId;
+  }
+  
+  async startEmailWorker() {
+    const consumer = new EventConsumer(this.redis, 'email-worker', new Map([
+      ['email', async (data) => {
+        // Simulate email sending
+        console.log(`Sending email to user ${data.userId}`);
+        await this.simulateEmailSend(data);
+      }]
+    ]));
+    
+    await consumer.start();
+  }
+  
+  async startPushWorker() {
+    const consumer = new EventConsumer(this.redis, 'push-worker', new Map([
+      ['push', async (data) => {
+        // Simulate push notification
+        console.log(`Sending push notification to user ${data.userId}`);
+        await this.simulatePushSend(data);
+      }]
+    ]));
+    
+    await consumer.start();
+  }
+  
+  private async simulateEmailSend(data: any) {
+    // Simulate email API call
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
+    if (Math.random() < 0.1) {
+      throw new Error('Email service temporarily unavailable');
+    }
+    
+    console.log(`✅ Email sent successfully to user ${data.userId}`);
+  }
+  
+  private async simulatePushSend(data: any) {
+    // Simulate push notification API call
+    await new Promise(resolve => setTimeout(resolve, 50));
+    
+    if (Math.random() < 0.05) {
+      throw new Error('Push service temporarily unavailable');
+    }
+    
+    console.log(`✅ Push notification sent successfully to user ${data.userId}`);
+  }
+}
+
+// Usage
+const notificationSystem = new NotificationSystem(redis);
+
+// Start workers
+notificationSystem.startEmailWorker();
+notificationSystem.startPushWorker();
+
+// Publish notifications
+await notificationSystem.publishNotification({
+  userId: '123',
+  type: 'email',
+  priority: 'medium',
+  template: 'welcome',
+  data: { name: 'John Doe', email: 'john@example.com' }
+});
+
+await notificationSystem.publishNotification({
+  userId: '123',
+  type: 'push',
+  priority: 'high',
+  template: 'order_shipped',
+  data: { orderId: 'order-456', trackingNumber: 'TRACK123' }
+});
+```
+
+## ✅ Success Criteria
+
+- [ ] Understand what message queues and streams are
+- [ ] Successfully set up Redis and connected to it
+- [ ] Created and read from Redis Streams
+- [ ] Implemented consumer groups for scalable processing
+- [ ] Built an event-driven system with producers and consumers
+- [ ] Handled message acknowledgments and error scenarios
+- [ ] Implemented stream monitoring and management
+- [ ] Completed the notification system project
+
+## 🚀 Bonus Challenges
+
+1. **Dead Letter Queue:** Implement failed message handling
+2. **Message Deduplication:** Prevent duplicate message processing
+3. **Stream Partitioning:** Scale across multiple Redis instances
+4. **Metrics Dashboard:** Build a real-time monitoring dashboard
+5. **Message Encryption:** Add security for sensitive data
+
+## 🎉 What's Next?
+
+You've now mastered the fundamentals of message queues and event-driven architecture! These skills are essential for building scalable, real-time applications. You're ready to tackle complex distributed systems!
+
+## 💡 Pro Tips
+
+- **Use consumer groups** for scalable message processing
+- **Always acknowledge messages** after successful processing
+- **Monitor stream length** to prevent memory issues
+- **Implement retry logic** for failed messages
+- **Use appropriate stream trimming** strategies
+- **Design idempotent consumers** to handle duplicate messages safely 
