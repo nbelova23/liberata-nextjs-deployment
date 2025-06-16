@@ -44,6 +44,7 @@ export function isHighlyRated(item: any): boolean {
 }
 
 // 4. Create a function that takes an array of MediaItems and returns the average rating
+//    specify this to be rounded to 2 decimal places.
 export function getAverageRating(items: any[]): number {
   // Your implementation here
 }

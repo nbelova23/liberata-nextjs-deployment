@@ -71,9 +71,9 @@ describe('Interfaces Exercise', () => {
   });
 
   test('getDescription returns a formatted string describing the item', () => {
-    expect(getDescription(book)).toBe('The Great Gatsby (Book) by F. Scott Fitzgerald');
-    expect(getDescription(movie)).toBe('The Shawshank Redemption (Movie) directed by Frank Darabont');
-    expect(getDescription(music)).toBe('Bohemian Rhapsody (Music) by Queen');
+    expect(getDescription(book)).toBe('The Great Gatsby (book) by F. Scott Fitzgerald');
+    expect(getDescription(movie)).toBe('The Shawshank Redemption (movie) directed by Frank Darabont');
+    expect(getDescription(music)).toBe('Bohemian Rhapsody (music) by Queen');
   });
 
   test('getItemsByTag returns items that have the specified tag', () => {
