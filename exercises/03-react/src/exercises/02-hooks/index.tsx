@@ -16,7 +16,7 @@
 // - useEffect: https://reactjs.org/docs/hooks-effect.html
 // - Custom Hooks: https://reactjs.org/docs/hooks-custom.html
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // TODO: Create these hooks:
 
@@ -34,7 +34,13 @@ export function useCounter(initialValue: number = 0, step: number = 1): {
   decrement: () => void;
   reset: () => void;
 } {
-  throw new Error('🚧 TODO: Implement the useCounter hook! Use useState to track a number and return functions to change it.');
+    const [count, setCount] = useState(initialValue)
+
+    const increment = () => setCount(count + step)
+    const decrement = () => setCount(count - step)
+    const reset = () => setCount(initialValue)
+
+    return { count, increment, decrement, reset }
 }
 
 // 2. Create a useTimer hook (like a stopwatch)
@@ -198,17 +204,6 @@ export function Example() {
             </div>
           </div>
         </div>
-      </div>
-      
-      <div style={{ marginTop: '20px', padding: '16px', backgroundColor: '#d1ecf1', borderRadius: '8px' }}>
-        <h4 style={{ color: '#0c5460', margin: '0 0 8px 0' }}>💡 Getting Started:</h4>
-        <ol style={{ color: '#0c5460', margin: 0, paddingLeft: '20px' }}>
-          <li>Start with useCounter - it's the simplest!</li>
-          <li>Use useState to track the count value</li>
-          <li>Return an object with count and functions to modify it</li>
-          <li>Test it by creating a component that uses the hook</li>
-          <li>Remember: hooks must start with "use" and follow the rules of hooks!</li>
-        </ol>
       </div>
     </div>
   );
