@@ -36,8 +36,8 @@ export function useCounter(initialValue: number = 0, step: number = 1): {
 } {
     const [count, setCount] = useState(initialValue)
 
-    const increment = () => setCount(count + step)
-    const decrement = () => setCount(count - step)
+    const increment = () => setCount(prev => prev + step)
+    const decrement = () => setCount(prev => prev - step)
     const reset = () => setCount(initialValue)
 
     return { count, increment, decrement, reset }
@@ -59,7 +59,36 @@ export function useTimer(initialSeconds: number, onComplete?: () => void): {
   pause: () => void;
   reset: () => void;
 } {
-  throw new Error('🚧 TODO: Implement the useTimer hook! Use useState and useEffect with setInterval to count down.');
+  const [seconds, setSeconds] = useState(initialSeconds)
+  const [isRunning, setIsRunning] = useState(false)
+
+  const start = () => setIsRunning(true)
+  const pause = () => setIsRunning(false)
+  const reset = () => {
+    setSeconds(initialSeconds)
+    setIsRunning(false)
+  }
+
+  useEffect(() => {
+    if (!isRunning) return
+
+    const interval = setInterval(() => {
+      setSeconds(prev => {
+      if (prev <= 1) {
+        clearInterval(interval)
+        setIsRunning(false)
+        if (onComplete) onComplete()
+          return 0
+      }
+      return prev - 1
+      })
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [isRunning])
+
+  return {seconds, isRunning, start, pause, reset}
+
 }
 
 // 3. Create a useFetch hook (like a news reader)
@@ -75,7 +104,34 @@ export function useFetch<T>(url: string): {
   error: string | null;
   refetch: () => void;
 } {
-  throw new Error('🚧 TODO: Implement the useFetch hook! Use useState for data/loading/error and useEffect to fetch.');
+
+  const [data, setData] = useState<T | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  const fetchData = async() => {
+    setLoading(true)
+    setError(null)
+
+    try{
+      const response = await fetch(url)
+      const result = await response.json()
+      setData(result)
+      setLoading(false)
+    }catch(e){
+      setError((e as Error).message)
+      setLoading(false)
+    }
+  }
+
+  useEffect( () => {
+    fetchData()
+  }, [url])
+
+  const refetch = () => fetchData()
+
+  return {data, loading, error, refetch}
+
 }
 
 // 4. Create a useForm hook (like a bouncer checking IDs)
@@ -95,49 +151,217 @@ export function useForm<T extends Record<string, any>>(
   handleChange: (name: string, value: any) => void;
   handleSubmit: (onSubmit: (values: T) => void) => () => void;
 } {
-  throw new Error('🚧 TODO: Implement the useForm hook! Use useState for values/errors and create handler functions.');
+
+  const [values, setValues] = useState<T>(initialValues)
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  
+  const handleChange = (name: string, value: any) => {
+    setValues({
+      ...values,
+      [name]: value
+    })
+
+  setErrors(prev => {
+    const newErrors = { ...prev }
+    delete newErrors[name]
+    return newErrors
+  })
+
+  }
+
+  const handleSubmit = (onSubmit: (values: T) => void) => {
+    return () => {
+      if(validate){
+        const validationErrors = validate?.(values)
+
+        if (Object.keys(validationErrors).length > 0) {
+          setErrors(validationErrors)
+          return
+        }
+
+      }
+      onSubmit(values)
+    }
+  }
+
+  return {values, errors, handleChange, handleSubmit}
+
 }
+
+
 
 // Additional hooks that tests expect:
 export function useLocalStorage(key: string, initialValue: any): [any, (value: any) => void] {
-  throw new Error('🚧 TODO: Implement the useLocalStorage hook! Use useState and useEffect to sync with localStorage.');
+  //throw new Error('🚧 TODO: Implement the useLocalStorage hook! Use useState and useEffect to sync with localStorage.');
+  const [value, setValue] = useState( () => {
+    const stored = localStorage.getItem(key)
+    if(stored !==null){
+      return JSON.parse(stored)
+    }
+    return initialValue
+  })
+
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(value))
+  }, [key, value])
+
+  return [value, setValue]
 }
 
 export function useDebounce<T>(value: T, delay: number): T {
-  throw new Error('🚧 TODO: Implement the useDebounce hook! Use useState and useEffect with setTimeout.');
+  //throw new Error('🚧 TODO: Implement the useDebounce hook! Use useState and useEffect with setTimeout.');
+  const [debouncedValue, setDebouncedValue] = useState<T>(value)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedValue(value)
+    }, delay)
+
+    return () => clearTimeout(timer)
+  }, [value, delay])
+
+  return debouncedValue
 }
 
 export function useWindowSize(): { width: number; height: number } {
-  throw new Error('🚧 TODO: Implement the useWindowSize hook! Use useState and useEffect with window resize listener.');
+  //throw new Error('🚧 TODO: Implement the useWindowSize hook! Use useState and useEffect with window resize listener.');
+  const [size, setSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight
+  })
+  const handleResize = () => {
+    setSize({
+      width: window.innerWidth,
+      height: window.innerHeight
+    })
+  }
+  useEffect(() => {
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+     window.removeEventListener("resize", handleResize)
+    }
+  }, [])
+  return size
 }
 
 export function usePrevious<T>(value: T): T | undefined {
-  throw new Error('🚧 TODO: Implement the usePrevious hook! Use useRef to store the previous value.');
+  //throw new Error('🚧 TODO: Implement the usePrevious hook! Use useRef to store the previous value.');
+  const ref = useRef<T | undefined>(undefined)
+  useEffect(() => {
+    ref.current = value
+  }, [value])
+  return ref.current
 }
 
 export function useClickOutside(callback: () => void): React.RefObject<HTMLDivElement> {
-  throw new Error('🚧 TODO: Implement the useClickOutside hook! Use useRef and useEffect with document click listener.');
+  //throw new Error('🚧 TODO: Implement the useClickOutside hook! Use useRef and useEffect with document click listener.');
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect( () => {
+    const handler = (event: MouseEvent) => {
+      if(ref.current && !ref.current.contains(event.target as Node)){
+        callback()
+     }
+    }
+
+    document.addEventListener("mousedown", handler)
+
+
+    return () => {
+      document.removeEventListener("mousedown", handler)
+    }
+
+  }, [callback])
+
+  return ref
 }
 
 // Components that use the hooks:
 export function PersistentCounter(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the PersistentCounter component! Use useLocalStorage and useCounter hooks.');
+  //throw new Error('🚧 TODO: Implement the PersistentCounter component! Use useLocalStorage and useCounter hooks.');
+  const [storedCount, setStoredCount] = useLocalStorage("counter", 0)
+  const { count, increment, decrement, reset } = useCounter(storedCount)
+
+  useEffect(() => {
+    setStoredCount(count)
+  }, [count])
+
+  return (
+    <div>
+      <p>{count}</p>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+      <button onClick={reset}>Reset</button>
+    </div>
+  )
 }
 
 export function DebouncedSearch(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the DebouncedSearch component! Use useDebounce hook with an input.');
+  //throw new Error('🚧 TODO: Implement the DebouncedSearch component! Use useDebounce hook with an input.');
+  const [text, setText] = useState("")
+  const debouncedText = useDebounce(text, 300)
+
+  return (
+    <div>
+      <input
+        placeholder="Search..."
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+
+      <p>Current: {text}</p>
+      <p>Debounced: {debouncedText}</p>
+    </div>
+  )
 }
 
 export function ResponsiveComponent(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the ResponsiveComponent component! Use useWindowSize hook to show screen size.');
+  //throw new Error('🚧 TODO: Implement the ResponsiveComponent component! Use useWindowSize hook to show screen size.');
+  const {width, height} = useWindowSize()
+
+  return (
+    <div>
+      <p>Window size: {width}x{height}</p>
+    </div>
+  )
+
 }
 
 export function PreviousValueComponent(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the PreviousValueComponent component! Use usePrevious hook to show old values.');
+  //throw new Error('🚧 TODO: Implement the PreviousValueComponent component! Use usePrevious hook to show old values.');
+  
+  const [value, setValue] = useState(0)
+  const prev = usePrevious(value)
+
+  return(
+    <div>
+      <button onClick={ () => setValue(prev => prev+1)}>
+        Increment
+      </button>
+      <p>{"Current: " + value}</p>
+      <p>{"Previous: " + prev}</p>
+    </div>
+  )
 }
 
 export function Dropdown(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the Dropdown component! Use useClickOutside hook to close when clicking outside.');
+  //throw new Error('🚧 TODO: Implement the Dropdown component! Use useClickOutside hook to close when clicking outside.');
+  const [open, setOpen] = useState(false)
+  const ref = useClickOutside(() => setOpen(false))
+
+  return (
+    <div>
+      <button onClick={() => setOpen(prev => !prev)}>
+        Toggle
+      </button>
+
+      {open && (
+        <div ref={ref}>
+          Dropdown content
+        </div>
+      )}
+    </div>
+  )
 }
 
 // Example usage (like a preview):
@@ -171,35 +395,35 @@ export function Example() {
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 PersistentCounter</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Component that uses useCounter + useLocalStorage hooks
+                <PersistentCounter/>
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 DebouncedSearch</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Component that uses useDebounce hook with search input
+                <DebouncedSearch/>
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 ResponsiveComponent</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Component that uses useWindowSize hook to show screen size
+                <ResponsiveComponent/>
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 PreviousValueComponent</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Component that uses usePrevious hook to show old values
+                <PreviousValueComponent/>
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 Dropdown</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Component that uses useClickOutside hook to close on outside click
+                <Dropdown/>
               </div>
             </div>
           </div>
@@ -210,3 +434,7 @@ export function Example() {
 }
 
 export const App = () => <Example />; 
+
+function fetchData() {
+  throw new Error('Function not implemented.');
+}
