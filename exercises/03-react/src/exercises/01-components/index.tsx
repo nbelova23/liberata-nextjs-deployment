@@ -28,7 +28,22 @@ import React from 'react';
 //    - onClick: What happens when clicked (like turning on a light)
 //    - disabled: Can it be clicked? (like a broken switch)
 export function Button(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the Button component! Make it look like a clickable button with different variants and sizes.');
+  let backgroundColor: string = "";
+  if(props.variant == "primary") backgroundColor = "blue";
+  if(props.variant == "other") backgroundColor = "red";
+
+  let padding: string = "";
+  if(props.size == "large") padding = "16px";
+  if(props.size == "medium") padding = "8px";
+  if(props.size == "small") padding = "4px";
+
+  return <button
+      onClick={props.onClick}
+      disabled={props.disabled}
+      style={{backgroundColor, padding}}
+    >
+    {props.children}
+  </button>
 }
 
 // 2. Create a Card component (like a photo frame)
@@ -37,7 +52,13 @@ export function Button(props: any): JSX.Element {
 //    - footer: What goes at the bottom (like a caption)
 //    - onClick: What happens when clicked (like opening a frame)
 export function Card(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the Card component! Make it look like a photo frame with a title and content.');
+  return (
+    <div onClick = {props.onClick}>
+      <h2>{props.title}</h2>
+      <div>{props.children}</div>
+      <div>{props.footer}</div>
+    </div>
+  )
 }
 
 // 3. Create a UserProfile component (like a name tag)
@@ -48,7 +69,16 @@ export function Card(props: any): JSX.Element {
 //    - onEdit: Change their info (like updating a profile)
 //    - onDelete: Remove them (like taking down a name tag)
 export function UserProfile(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the UserProfile component! Make it look like a name tag with photo and info.');
+  return(
+    <div>
+      <h2>{props.name}</h2>
+      <img src={props.avatar}></img>
+      <div>{props.role}</div>
+      <div>{props.email}</div>
+      <button onClick={props.onEdit}>Edit</button>
+      <button onClick={props.onDelete}>Delete</button>
+    </div>
+  )
 }
 
 // 4. Create a TodoList component (like a shopping list)
@@ -56,8 +86,21 @@ export function UserProfile(props: any): JSX.Element {
 //    - onToggle: Mark as done (like checking off items)
 //    - onDelete: Remove items (like crossing out items)
 export function TodoList(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the TodoList component! Make it look like a shopping list with checkboxes.');
-}
+  return (
+    <div>
+      {props.todos.map((todo: any) => (
+        <div key={todo.id}>
+          <div>{todo.text}</div>
+          <button onClick={() => props.onToggle(todo.id)}>
+            Toggle
+          </button>
+          <button onClick={() => props.onDelete(todo.id)}>
+            Delete
+          </button>
+        </div>
+      ))}
+    </div>
+  )}
 
 // 5. Create a SearchInput component (like a search bar)
 //    - value: What's typed in (like words in a search)
@@ -65,7 +108,28 @@ export function TodoList(props: any): JSX.Element {
 //    - placeholder: What to show when empty (like "Search...")
 //    - debounceMs: How long to wait (like thinking time)
 export function SearchInput(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the SearchInput component! Make it look like a search bar that waits before searching.');
+
+  const [value, setValue] = React.useState(props.value || '')
+ React.useEffect(() => {
+  if (!props.debounceMs) {
+    props.onChange(value);
+    return;
+  }
+  const timer = setTimeout(() => {
+    props.onChange(value);
+  }, props.debounceMs);
+  
+  return () => clearTimeout(timer);
+}, [value]);
+
+  return(
+    <input
+      value={props.value}
+      placeholder={props.placeholder}
+      onChange={(e) => setValue(e.target.value)}
+    />
+
+  )
 }
 
 // Example usage (like a preview):
@@ -100,7 +164,15 @@ export function Example() {
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 Button</div>
               <div style={{ marginBottom: '8px', fontSize: '0.9rem', color: '#666' }}>
-                TODO: Student should add Button component here
+                
+                <Button
+                  variant="primary"
+                  size="medium"
+                  onClick={() => alert("hi")}
+                >
+                  Click me
+                </Button>
+
               </div>
             </div>
 
@@ -108,7 +180,13 @@ export function Example() {
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 Card</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Student should add Card component here
+                <Card
+                  title="Card!"
+                  footer="Reached the bottom"
+                  onClick={()=>alert("hey")}
+                >
+                  Middle of Card
+                </Card>
               </div>
             </div>
 
@@ -116,7 +194,15 @@ export function Example() {
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 UserProfile</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Student should add UserProfile component here
+                <UserProfile
+                  name="John Doe"
+                  avatar="https://via.placeholder.com/100"
+                  role="Developer"
+                  email="john@example.com"
+                  onEdit={() => alert("edit")}
+                  onDelete={() => alert("delete")}
+                />
+              
               </div>
             </div>
 
@@ -124,7 +210,14 @@ export function Example() {
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 TodoList</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Student should add TodoList component here
+                <TodoList
+                  todos={[
+                    { id: "1", text: "Learn React", completed: false },
+                    { id: "2", text: "Build a project", completed: true }
+                  ]}
+                  onToggle={(id: string) => alert(`toggle ${id}`)}
+                  onDelete={(id: string) => alert(`delete ${id}`)}
+                />
               </div>
             </div>
 
@@ -132,7 +225,12 @@ export function Example() {
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 SearchInput</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Student should add SearchInput component here
+                <SearchInput
+                  value=""
+                  placeholder="Search..."
+                  debounceMs={300}
+                  onChange={(value: string) => alert(value)}
+                />
               </div>
             </div>
           </div>
