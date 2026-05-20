@@ -17,7 +17,7 @@
 // - Controlled Components: https://reactjs.org/docs/forms.html#controlled-components
 // - Form Validation: https://formik.org/docs/guides/validation
 
-import React from 'react';
+import React, { useState } from "react"
 
 // TODO: Create these components and hooks:
 
@@ -36,9 +36,43 @@ export function useForm<T extends Record<string, any>>(
   values: T;
   errors: Record<string, string>;
   handleChange: (name: string, value: any) => void;
+  handleBlur: (name: string) => void;
   handleSubmit: (onSubmit: (values: T) => void) => () => void;
 } {
-  throw new Error('🚧 TODO: Implement the useForm hook! Use useState for values/errors and create handler functions.');
+  const [values, setValues] = useState<T>(initialValues)
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const handleChange = (name: string, value: any) => {
+    setValues({
+      ...values,
+      [name]: value
+    })
+    setErrors(prev => {
+      const newErrors = { ...prev }
+      delete newErrors[name]
+      return newErrors
+    })
+  }
+  const handleSubmit = (onSubmit: (values: T) => void) => {
+    return () => {
+      if (validate) {
+        const validationErrors = validate(values)
+        if (Object.keys(validationErrors).length > 0) {
+          setErrors(validationErrors)
+          return
+        }
+      }
+      onSubmit(values)
+    }
+  }
+  const handleBlur = (name: string) => {
+  if (validate) {
+    const validationErrors = validate(values)
+    if (validationErrors[name]) {
+      setErrors(prev => ({ ...prev, [name]: validationErrors[name] }))
+    }
+  }
+  } 
+  return { values, errors, handleChange, handleBlur, handleSubmit }
 }
 
 // 2. Create a FormField component (like a question)
@@ -50,7 +84,35 @@ export function useForm<T extends Record<string, any>>(
 //    - onChange: When answer changes (like typing)
 //    - placeholder: Hint text (like "Enter your name")
 export function FormField(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the FormField component! Create a labeled input with error display.');
+  
+  if (props.options) {
+    return (
+      <div>
+        <label htmlFor={props.name}>{props.label}</label>
+        <select id={props.name} name={props.name} value={props.value} onChange={(e) => props.onChange(props.name, e.target.value)} onBlur={() => props.onBlur && props.onBlur(props.name)}>
+          {props.options.map((opt: any) => (
+            <option key={opt.value} value={opt.value}>{opt.label}</option>
+          ))}
+        </select>
+        {props.error && <p>{props.error}</p>}
+      </div>
+    )
+  }
+  return (
+    <div>
+      <label htmlFor={props.name}>{props.label}</label>
+      <input
+        id={props.name}
+        type={props.type || "text"}
+        name={props.name}
+        value={props.value}
+        placeholder={props.placeholder}
+        onChange={(e) => props.onChange(props.name, e.target.value)}
+        onBlur={() => props.onBlur && props.onBlur(props.name)}
+      />
+      {props.error && <p>{props.error}</p>}
+    </div>
+  )
 }
 
 // 3. Create a Form component (like a questionnaire)
@@ -58,7 +120,18 @@ export function FormField(props: any): JSX.Element {
 //    - children: The form fields (like the questions)
 //    - title: Form title (like "Registration")
 export function Form(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the Form component! Create a form wrapper with title and submit handling.');
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        props.onSubmit()
+      }}
+    >
+      <h2>{props.title}</h2>
+      {props.children}
+      <button type="submit">{props.buttonText}</button>
+    </form>
+  )
 }
 
 // 4. Create a RegistrationForm component (like a membership application)
@@ -68,7 +141,85 @@ export function Form(props: any): JSX.Element {
 //    - password: User's password (required, min 6 chars)
 //    - confirmPassword: Confirm password (required, must match)
 export function RegistrationForm(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the RegistrationForm component! Use useForm hook with validation.');
+  const initialValues = {
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  }
+  const validate = (values: typeof initialValues) => {
+    const errors: Record<string, string> = {}
+    if (!values.name) {
+      errors.name = "Username is required"
+    }
+    if (!values.email) {
+      errors.email = "Email is required"
+    } else if (!values.email.includes("@")) {
+      errors.email = "Invalid email address"
+    }
+    if (!values.password) {
+      errors.password = "Password is required"
+    } else if (values.password.length < 8) {
+      errors.password = "Password must be at least 8 characters"
+    }
+    if (!values.confirmPassword) {
+      errors.confirmPassword = "Please confirm password"
+    } else if (values.confirmPassword !== values.password) {
+      errors.confirmPassword = "Passwords do not match"
+    }
+    return errors
+  }
+
+  const { values, errors, handleChange, handleBlur, handleSubmit } = useForm(initialValues, validate)
+  const onSubmit = (values: typeof initialValues) => {
+    console.log(values)
+  }
+
+  return (
+    <Form title="Registration" onSubmit={handleSubmit(onSubmit)} buttonText = "Register">
+      <FormField
+        label="Name"
+        name="name"
+        value={values.name}
+        error={errors.name}
+        onChange={handleChange}
+        placeholder="Enter your name"
+      />
+
+      <FormField
+        label="Email"
+        name="email"
+        type="email"
+        value={values.email}
+        error={errors.email}
+        onChange={handleChange}
+        placeholder="Enter your email"
+        onBlur={handleBlur}
+      />
+
+      <FormField
+        label="Password"
+        name="password"
+        type="password"
+        value={values.password}
+        error={errors.password}
+        onChange={handleChange}
+        placeholder="Enter your password"
+        onBlur={handleBlur}
+      />
+
+      <FormField
+        label="Confirm Password"
+        name="confirmPassword"
+        type="password"
+        value={values.confirmPassword}
+        error={errors.confirmPassword}
+        onChange={handleChange}
+        placeholder="Confirm your password"
+        onBlur={handleBlur}
+      />
+    </Form>
+  )
 }
 
 // 5. Create a SurveyForm component (like a feedback form)
@@ -78,7 +229,25 @@ export function RegistrationForm(): JSX.Element {
 //    - recommend: Would recommend (yes/no)
 //    - email: Contact email (optional)
 export function SurveyForm(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the SurveyForm component! Use different input types and validation.');
+  const initialValues = {
+    name: "",
+    age: "",
+    occupation: "",
+    feedback: ""
+  }
+
+  const { values, errors, handleChange, handleSubmit } = useForm(initialValues)
+  const onSubmit = (values: typeof initialValues) => {
+    console.log(values)
+  }
+  return (
+    <Form title="Survey" onSubmit={handleSubmit(onSubmit)} buttonText="Submit">
+      <FormField label="Name" name="name" value={values.name} error={errors.name} onChange={handleChange} />
+      <FormField label="Age" name="age" type="number" value={values.age} error={errors.age} onChange={handleChange} />
+      <FormField label="Occupation" name="occupation" value={values.occupation} error={errors.occupation} onChange={handleChange} />
+      <FormField label="Feedback" name="feedback" value={values.feedback} error={errors.feedback} onChange={handleChange} />
+    </Form>
+  )
 }
 
 // Example usage (like a preview):
@@ -112,35 +281,35 @@ export function Example() {
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 useForm</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Hook to manage form state and validation
+                useForm hook implemented
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 FormField</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Reusable input component with label and error display
+                Form field implemented
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 Form</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Wrapper component for forms with submit handling
+                Form implemented
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 RegistrationForm</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Complete registration form with validation using useForm hook
+                <RegistrationForm/>
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 SurveyForm</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Feedback form with different input types using form components
+                <SurveyForm/>
               </div>
             </div>
           </div>
