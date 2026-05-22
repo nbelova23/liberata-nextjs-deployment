@@ -86,7 +86,69 @@ function useLocalStorage<T>(key: string, initialValue: T) {
 //    - deleteTodo: Remove task
 //    - clearCompleted: Remove all done tasks
 export function TodoList(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the TodoList component! Use useState to manage todos and filters.');
+  const [todos, setTodos] = useState<Todo[]>([])
+  const [filter, setFilter] = useState("all")
+  const [text, setText] = useState("")
+  const addTodo = () => {
+    if (!text.trim()) return
+    const newTodo: Todo = {
+      id: Date.now(),
+      text,
+      completed: false
+    }
+    setTodos([...todos, newTodo])
+    setText("")
+  }
+  const toggleTodo = (id: number) => {
+    setTodos(
+      todos.map(todo =>
+        todo.id === id
+          ? { ...todo, completed: !todo.completed }
+          : todo
+      )
+    )
+  }
+  const deleteTodo = (id: number) => {
+    setTodos(todos.filter(todo => todo.id !== id))
+  }
+  const clearCompleted = () => {
+    setTodos(todos.filter(todo => !todo.completed))
+  }
+  const filteredTodos = todos.filter(todo => {
+    if (filter === "completed") return todo.completed
+    if (filter === "active") return !todo.completed
+    return true
+  })
+  return (
+    <div>
+      <h2>Todo List</h2>
+      <input
+        placeholder="Add new todo"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+      <button onClick={addTodo}>Add</button>
+      <div>
+        <button onClick={() => setFilter("all")}>All</button>
+        <button onClick={() => setFilter("active")}>Active</button>
+        <button onClick={() => setFilter("completed")}>Completed</button>
+      </div>
+      <ul>
+        {filteredTodos.map(todo => (
+          <li key={todo.id}>
+            <input
+              type="checkbox"
+              checked={todo.completed}
+              onChange={() => toggleTodo(todo.id)}
+            />
+            <span>{todo.text}</span>
+            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+      <button onClick={clearCompleted}>Clear Completed</button>
+    </div>
+  )
 }
 
 // 2. Create a DataFetcher component (like a news reader)
@@ -97,7 +159,24 @@ export function TodoList(): JSX.Element {
 //    - refetch: Get data again
 //    - pagination: Handle multiple pages
 export function DataFetcher(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the DataFetcher component! Use useState and useEffect to fetch and manage data.');
+  const { data, loading, error } = useFetch<{
+    id: number
+    name: string
+    email: string
+  }>("https://jsonplaceholder.typicode.com/users/1")
+  if (loading) {
+    return <p>Loading...</p>
+  }
+  if (error) {
+    return <p>Error: {error}</p>
+  }
+  return (
+    <div>
+      <h2>Data Fetcher</h2>
+      <p>{data?.name}</p>
+      <p>{data?.email}</p>
+    </div>
+  )
 }
 
 // 3. Create a Counter component with useReducer (like a complex scoreboard)
@@ -109,7 +188,63 @@ export function DataFetcher(): JSX.Element {
 //    - reset: Back to 0
 //    - history: Track all changes
 export function Counter(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the Counter component! Use useReducer for complex state management.');
+  const initialState = {
+    count: 0,
+    history: [] as number[]
+  }
+  function reducer(state: typeof initialState, action: any) {
+    switch (action.type) {
+      case "increment": {
+        const newCount = state.count + 1
+        return {
+          count: newCount,
+          history: [...state.history, newCount]
+        }
+      }
+      case "decrement": {
+        const newCount = state.count - 1
+        return {
+          count: newCount,
+          history: [...state.history, newCount]
+        }
+      }
+      case "incrementBy": {
+        const newCount = state.count + action.payload
+        return {
+          count: newCount,
+          history: [...state.history, newCount]
+        }
+      }
+      case "reset":
+        return {
+          count: 0,
+          history: []
+        }
+      default:
+        return state
+    }
+  }
+  const [state, dispatch] = useReducer(reducer, initialState)
+  return (
+    <div>
+      <h2>Counter</h2>
+        <p>{state.count}</p>
+      <div>
+        <button onClick={() => dispatch({ type: "increment" })}>
+          Increment
+        </button>
+        <button onClick={() => dispatch({ type: "decrement" })}>
+          Decrement
+        </button>
+        <button onClick={() => dispatch({ type: "incrementBy", payload: 5 })}>
+          +5
+        </button>
+        <button onClick={() => dispatch({ type: "reset" })}>
+          Reset
+        </button>
+      </div>
+    </div>
+  )
 }
 
 // 4. Create a FormWithValidation component (like a smart form)
@@ -120,7 +255,77 @@ export function Counter(): JSX.Element {
 //    - isValid: Is form ready to submit?
 //    - isSubmitting: Is form being sent?
 export function FormWithValidation(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the FormWithValidation component! Use useState for complex form state.');
+  const [values, setValues] = useState({
+    name: "",
+    email: ""
+  })
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [touched, setTouched] = useState<Record<string, boolean>>({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const validate = (vals: typeof values) => {
+    const newErrors: Record<string, string> = {}
+    if (!vals.name) {
+      newErrors.name = "Name is required"
+    }
+    if (!vals.email) {
+      newErrors.email = "Email is required"
+    } else if (!vals.email.includes("@")) {
+      newErrors.email = "Invalid email"
+    }
+    return newErrors
+  }
+  const handleChange = (name: string, value: string) => {
+    const newValues = { ...values, [name]: value }
+    setValues(newValues)
+    setErrors(validate(newValues))
+  }
+  const handleBlur = (name: string) => {
+    setTouched({ ...touched, [name]: true })
+  }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    const validationErrors = validate(values)
+    setErrors(validationErrors)
+    if (Object.keys(validationErrors).length === 0) {
+      alert("Form submitted!")
+    }
+    setIsSubmitting(false)
+  }
+  const isValid = Object.keys(errors).length === 0
+  return (
+    <form onSubmit={handleSubmit}>
+      <h2>Form With Validation</h2>
+      {/* Name */}
+      <div>
+        <label>Name:</label>
+        <input
+          value={values.name}
+          onChange={(e) => handleChange("name", e.target.value)}
+          onBlur={() => handleBlur("name")}
+        />
+        {touched.name && errors.name && (
+          <p style={{ color: "red" }}>{errors.name}</p>
+        )}
+      </div>
+      {/* Email */}
+      <div>
+        <label>Email:</label>
+        <input
+          value={values.email}
+          onChange={(e) => handleChange("email", e.target.value)}
+          onBlur={() => handleBlur("email")}
+        />
+        {touched.email && errors.email && (
+          <p style={{ color: "red" }}>{errors.email}</p>
+        )}
+      </div>
+      {/* Submit */}
+      <button type="submit" disabled={!isValid || isSubmitting}>
+        {isSubmitting ? "Submitting..." : "Submit"}
+      </button>
+    </form>
+  )
 }
 
 // 5. Create a ShoppingCart with Context (like a store cart)
@@ -134,19 +339,101 @@ export function FormWithValidation(): JSX.Element {
 export const CartContext = createContext<any>(null);
 
 export function CartProvider({ children }: { children: React.ReactNode }): JSX.Element {
-  throw new Error('🚧 TODO: Implement the CartProvider component! Use useState and Context to manage cart state.');
+  const [items, setItems] = useState<any[]>([])
+  const addItem = (product: any) => {
+    const existing = items.find(item => item.id === product.id)
+    if (existing) {
+      setItems(
+        items.map(item =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      )
+    } else {
+      setItems([...items, { ...product, quantity: 1 }])
+    }
+  }
+  const removeItem = (id: number) => {
+    setItems(items.filter(item => item.id !== id))
+  }
+  const updateQuantity = (id: number, quantity: number) => {
+    setItems(
+      items.map(item =>
+        item.id === id ? { ...item, quantity } : item
+      )
+    )
+  }
+  const clearCart = () => {
+    setItems([])
+  }
+  const total = items.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  )
+  return (
+    <CartContext.Provider
+      value={{ items, addItem, removeItem, updateQuantity, clearCart, total }}
+    >
+      {children}
+    </CartContext.Provider>
+  )
 }
 
 export function ShoppingCart(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the ShoppingCart component! Use useContext to access cart state.');
+  const { items, removeItem, updateQuantity, clearCart, total } =
+    useContext(CartContext)
+  return (
+    <div>
+      <h2>Shopping Cart</h2>
+      {items.length === 0 && <p>Cart is empty</p>}
+      <ul>
+        {items.map((item: any) => (
+          <li key={item.id}>
+            {item.name} - ${item.price} × {item.quantity}
+            <button onClick={() => removeItem(item.id)}>
+              Remove
+            </button>
+            <button onClick={() =>
+              updateQuantity(item.id, item.quantity + 1)
+            }>
+              +
+            </button>
+
+            <button onClick={() =>
+              updateQuantity(item.id, item.quantity - 1)
+            }>
+              -
+            </button>
+          </li>
+        ))}
+      </ul>
+      <p>Total: ${total}</p>
+      <button onClick={clearCart}>Clear Cart</button>
+    </div>
+  )
 }
 
 export function ProductCard({ product }: { product: any }): JSX.Element {
-  throw new Error('🚧 TODO: Implement the ProductCard component! Use useContext to add products to cart.');
+  const { addItem } = useContext(CartContext)
+  return (
+    <div>
+      <h3>{product.name}</h3>
+      <p>${product.price}</p>
+
+      <button onClick={() => addItem(product)}>
+        Add to Cart
+      </button>
+    </div>
+  )
 }
 
 // Example usage (like a preview):
 export function Example() {
+  const fakeProducts = [
+    { id: 1, name: "Laptop", price: 999 },
+    { id: 2, name: "Phone", price: 699 }
+  ]
   return (
     <div style={{ padding: '20px' }}>
       <h2>State Management Exercise</h2>
@@ -176,35 +463,41 @@ export function Example() {
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 TodoList</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Task manager component with filtering and state management
+                <TodoList/>
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 DataFetcher</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Component that fetches and manages API data with loading states
+                <DataFetcher/>
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 Counter</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Complex counter component using useReducer for state management
+                <Counter/>
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 FormWithValidation</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Smart form component with complex validation state
+                <FormWithValidation/>
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 ShoppingCart</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Cart system using Context API with CartProvider and ProductCard
+                
+                <CartProvider>
+                  {fakeProducts.map(p => (
+                    <ProductCard key={p.id} product={p} />
+                  ))}
+                  <ShoppingCart />
+                </CartProvider>
               </div>
             </div>
           </div>

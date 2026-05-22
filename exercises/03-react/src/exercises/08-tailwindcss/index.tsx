@@ -26,7 +26,26 @@ import React from 'react';
 //    - disabled: Can it be clicked? (like a broken switch)
 //    - children: What text to show (like the label)
 export function Button(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the Button component! Use Tailwind classes like bg-blue-500, text-white, px-4, py-2.');
+  const { variant = "primary", size = "md", disabled, children } = props
+  const base = "rounded font-semibold"
+  const variantClass =
+    variant === "secondary"
+      ? "bg-gray-200 text-black"
+      : "bg-blue-500 text-white"
+  const sizeClass =
+    size === "lg"
+      ? "px-6 py-3"
+      : size === "sm"
+      ? "px-2 py-1"
+      : "px-4 py-2"
+  return (
+    <button
+      className={`${base} ${variantClass} ${sizeClass}`}
+      disabled={disabled}
+    >
+      {children}
+    </button>
+  )
 }
 
 // 2. Create a Card component (like a photo frame)
@@ -35,7 +54,20 @@ export function Button(props: any): JSX.Element {
 //    - footer: What goes at bottom (like a caption)
 //    - shadow: How it floats (like a shadow)
 export function Card(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the Card component! Use Tailwind classes like bg-white, shadow-md, p-4, rounded-xl.');
+  const { title, children, footer, shadow } = props
+  const shadowClass =
+    shadow === "lg"
+      ? "shadow-lg"
+      : shadow === "sm"
+      ? "shadow-sm"
+      : "shadow-md"
+  return (
+    <div className={`bg-white p-4 rounded-xl ${shadowClass}`}>
+      {title && <h3 className="font-bold mb-2">{title}</h3>}
+      <div>{children}</div>
+      {footer && <div className="mt-2 text-sm text-gray-500">{footer}</div>}
+    </div>
+  )
 }
 
 // 3. Create a Navbar component (like a menu board)
@@ -44,7 +76,20 @@ export function Card(props: any): JSX.Element {
 //    - onMenuClick: What to do when clicked (like ordering)
 //    - isMobile: Is it small? (like a mobile menu)
 export function Navbar(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the Navbar component! Use Tailwind classes like flex, justify-between, items-center, p-4.');
+  const { logo, links = [], onMenuClick } = props
+  return (
+    <nav className="flex justify-between items-center p-4 bg-gray-100">
+      <div className="font-bold">{logo}</div>
+
+      <div className="flex gap-4">
+        {links.map((link: any, index: number) => (
+          <button key={index} onClick={() => onMenuClick?.(link)}>
+            {link}
+          </button>
+        ))}
+      </div>
+    </nav>
+  )
 }
 
 // 4. Create a Grid component (like a photo wall)
@@ -53,16 +98,30 @@ export function Navbar(props: any): JSX.Element {
 //    - children: What to show (like photos)
 //    - responsive: Change on small screens? (like mobile view)
 export function Grid(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the Grid component! Use Tailwind classes like grid, grid-cols-3, gap-4, md:grid-cols-4.');
+  const { columns = 3, gap = 4, children } = props
+  const colsClass = `grid-cols-${columns}`
+  const gapClass = `gap-${gap}`
+  return <div className={`grid ${colsClass} ${gapClass}`}>{children}</div>
 }
 
 // Components that tests expect:
 export function ResponsiveCard(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the ResponsiveCard component! Create a card that adapts to different screen sizes.');
+  return (
+    <div className="bg-white p-4 rounded-xl shadow-md md:p-6">
+      <h2 className="text-lg md:text-xl font-bold">Responsive Card</h2>
+      <p className="text-sm md:text-base mt-2">
+        This card should adapt to different screen sizes.
+      </p>
+    </div>
+  )
 }
 
 export function CustomButton(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the CustomButton component! Create a button with custom Tailwind styling.');
+  return (
+    <button className="bg-blue-500 text-white px-4 py-2 rounded">
+      Click Me
+    </button>
+  )
 }
 
 // Example usage (like a preview):
@@ -86,42 +145,57 @@ export function Example() {
             <div className="p-4 border border-dashed border-gray-300 rounded-lg">
               <div className="mb-3 font-bold">📝 Button</div>
               <div className="text-sm text-gray-600">
-                TODO: Styled button with Tailwind classes (bg-blue-500, px-4, py-2)
+                <Button variant="primary" size="md">
+                  Click Me
+                </Button>
               </div>
             </div>
             
             <div className="p-4 border border-dashed border-gray-300 rounded-lg">
               <div className="mb-3 font-bold">📝 Card</div>
               <div className="text-sm text-gray-600">
-                TODO: Container with Tailwind classes (shadow-md, rounded-xl, p-4)
+                <Card
+                  title="Title"
+                  footer="footer"
+                >
+                  content
+                </Card>
               </div>
             </div>
             
             <div className="p-4 border border-dashed border-gray-300 rounded-lg">
               <div className="mb-3 font-bold">📝 Navbar</div>
-              <div className="text-sm text-gray-600">
-                TODO: Navigation bar with Tailwind classes (flex, justify-between)
+              <div className="text-sm text-gray-600">        
+                <Navbar
+                  logo="App"
+                  links={["Home", "About", "Contact"]}
+                  onMenuClick={(link: string) => console.log(link)}
+                />
               </div>
             </div>
             
             <div className="p-4 border border-dashed border-gray-300 rounded-lg">
               <div className="mb-3 font-bold">📝 Grid</div>
               <div className="text-sm text-gray-600">
-                TODO: Responsive grid with Tailwind classes (grid, grid-cols-3, gap-4)
+                <Grid columns={3} gap={4}>
+                  <div className="bg-gray-200 p-2">Item 1</div>
+                  <div className="bg-gray-200 p-2">Item 2</div>
+                  <div className="bg-gray-200 p-2">Item 3</div>
+                </Grid>
               </div>
             </div>
             
             <div className="p-4 border border-dashed border-gray-300 rounded-lg">
               <div className="mb-3 font-bold">📝 ResponsiveCard</div>
               <div className="text-sm text-gray-600">
-                TODO: Card that adapts to different screen sizes with Tailwind
+                <ResponsiveCard/>
               </div>
             </div>
             
             <div className="p-4 border border-dashed border-gray-300 rounded-lg">
               <div className="mb-3 font-bold">📝 CustomButton</div>
               <div className="text-sm text-gray-600">
-                TODO: Button with custom Tailwind styling and variants
+                <CustomButton/>
               </div>
             </div>
           </div>

@@ -26,7 +26,14 @@ import React from 'react';
 //    - lastUpdated: When was it made? (like menu date)
 //    - metadata: SEO info (like restaurant description)
 export function StaticPage(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the StaticPage component! This should be pre-built at build time (SSG).');
+  const { data } = props
+
+  return (
+    <div>
+      <h1>Statically Generated Page</h1>
+      <p>Data: {JSON.stringify(data)}</p>
+    </div>
+  )
 }
 
 // 2. Create a ServerSidePage component (like fresh cooking)
@@ -35,7 +42,14 @@ export function StaticPage(props: any): JSX.Element {
 //    - timestamp: When was it made? (like cooking time)
 //    - personalized: Custom for user? (like special order)
 export function ServerSidePage(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the ServerSidePage component! This should be built on each request (SSR).');
+  const { data } = props
+
+  return (
+    <div>
+      <h1>Server-Side Rendered Page</h1>
+      <p>Data: {JSON.stringify(data)}</p>
+    </div>
+  )
 }
 
 // 3. Create a HybridPage component (like some pre-made, some fresh)
@@ -44,37 +58,74 @@ export function ServerSidePage(props: any): JSX.Element {
 //    - revalidate: How often to refresh? (like restocking)
 //    - fallback: What to show while loading? (like "preparing...")
 export function HybridPage(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the HybridPage component! This uses ISR (Incremental Static Regeneration).');
+  const { staticContent, dynamicContent, revalidate, fallback } = props
+  if (!dynamicContent) {
+    return <p>{fallback || "Loading..."}</p>
+  }
+  return (
+    <div>
+      <h1>Hybrid Page</h1>
+      <p>Static: {staticContent}</p>
+      <p>Dynamic: {dynamicContent}</p>
+      <p>Revalidate every: {revalidate} seconds</p>
+    </div>
+  )
 }
 
 // 4. Create data fetching functions (like getting ingredients)
 
 // Get static data (like reading a recipe book)
 export async function getStaticData() {
-  throw new Error('🚧 TODO: Implement getStaticData function! This fetches data at build time.');
+  return {
+    title: "Static Page",
+    content: "This content was generated at build time.",
+    lastUpdated: "Build Time",
+    metadata: {
+      description: "This is static content."
+    }
+  }
 }
 
 // Get server data (like checking the fridge)
 export async function getServerData() {
-  throw new Error('🚧 TODO: Implement getServerData function! This fetches data on each request.');
+  return {
+    data: "This data was generated on request.",
+    user: { name: "John Doe" },
+    timestamp: new Date().toISOString(),
+    personalized: true
+  }
 }
 
 // Get paths for static generation (like menu items to pre-make)
 export async function getStaticPaths() {
-  throw new Error('🚧 TODO: Implement getStaticPaths function! This tells Next.js which pages to pre-build.');
-}
+  return ["1", "2", "3"]}
 
 // Components that tests expect:
 export function BlogPost(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the BlogPost component! A static blog post with SSG.');
+  return (
+    <div>
+      <h1>Blog Post</h1>
+      <p>This is a static blog post.</p>
+    </div>
+  )
 }
 
 export function UserDashboard(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the UserDashboard component! A personalized dashboard with SSR.');
+  return (
+    <div>
+      <h1>User Dashboard</h1>
+      <p>Welcome back, user!</p>
+    </div>
+  )
 }
 
 export function ProductPage(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the ProductPage component! A product page with ISR.');
+  return (
+    <div>
+      <h1>Product Page</h1>
+      <p>This product page updates periodically.</p>
+    </div>
+  )
 }
 
 // Example usage (like a preview):
@@ -97,43 +148,58 @@ export function Example() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
             <div className="p-4 border border-dashed border-gray-300 rounded-lg">
               <div className="mb-3 font-bold">📝 StaticPage</div>
-              <div className="text-sm text-gray-600">
-                TODO: Component pre-built at build time using SSG
+              <div className="text-sm text-gray-600"> 
+                <StaticPage
+                  title="Static Page"
+                  content="This is static content."
+                  lastUpdated="Build time"
+                  metadata={{ description: "Static metadata" }}
+                />
               </div>
             </div>
             
             <div className="p-4 border border-dashed border-gray-300 rounded-lg">
               <div className="mb-3 font-bold">📝 ServerSidePage</div>
               <div className="text-sm text-gray-600">
-                TODO: Component built on each request using SSR
+                <ServerSidePage
+                  data="Fresh data"
+                  user={{ name: "John" }}
+                  timestamp={new Date().toISOString()}
+                  personalized={true}
+                />
               </div>
             </div>
             
             <div className="p-4 border border-dashed border-gray-300 rounded-lg">
               <div className="mb-3 font-bold">📝 HybridPage</div>
               <div className="text-sm text-gray-600">
-                TODO: Component using ISR (Incremental Static Regeneration)
+                <HybridPage
+                  staticContent="Static content"
+                  dynamicContent="Dynamic content"
+                  revalidate={10}
+                  fallback="Loading..."
+                />
               </div>
             </div>
             
             <div className="p-4 border border-dashed border-gray-300 rounded-lg">
               <div className="mb-3 font-bold">📝 BlogPost</div>
               <div className="text-sm text-gray-600">
-                TODO: Static blog post component with SSG
+                <BlogPost/>
               </div>
             </div>
             
             <div className="p-4 border border-dashed border-gray-300 rounded-lg">
               <div className="mb-3 font-bold">📝 UserDashboard</div>
               <div className="text-sm text-gray-600">
-                TODO: Personalized dashboard component with SSR
+                <UserDashboard/>
               </div>
             </div>
             
             <div className="p-4 border border-dashed border-gray-300 rounded-lg">
               <div className="mb-3 font-bold">📝 ProductPage</div>
               <div className="text-sm text-gray-600">
-                TODO: Product page component with ISR and data fetching
+                <ProductPage/>
               </div>
             </div>
           </div>
@@ -152,3 +218,5 @@ export function Example() {
 }
 
 export const App = () => <Example />; 
+export const SSGPage = StaticPage
+export const SSRPage = ServerSidePage

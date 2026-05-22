@@ -25,8 +25,33 @@ import React, { useState, useEffect } from 'react';
 //    - onLoad: What to do with data (like reading)
 //    - onError: What to do if wrong (like error message)
 //    - loading: Are we getting data? (like "reading...")
-export function DataLoader(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the DataLoader component! Use useEffect to fetch data and handle loading/error states.');
+export function DataLoader(props: any): JSX.Element | null {
+  const { url, onLoad, onError } = props
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        const response = await fetch(url)
+        if (!response.ok) {
+          throw new Error("Failed to fetch")
+        }
+        const data = await response.json()
+        onLoad(data)
+      } catch (e) {
+        onError(e)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchData()
+  }, [url])
+
+  if (loading) {
+    return <p>Loading...</p>
+  }
+  return null
 }
 
 // 2. Create a PollingComponent (like a weather update)
@@ -34,8 +59,24 @@ export function DataLoader(props: any): JSX.Element {
 //    - fetchData: What to get (like weather forecast)
 //    - onUpdate: What to do with new data (like showing forecast)
 //    - onError: What to do if wrong (like "can't get weather")
-export function PollingComponent(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the PollingComponent component! Use useEffect with setInterval to fetch data repeatedly.');
+export function PollingComponent(props: any): JSX.Element | null {
+  const { interval, fetchData, onUpdate, onError } = props
+
+  useEffect(() => {
+    const fetchAndUpdate = async () => {
+      try {
+        const data = await fetchData()
+        onUpdate(data)
+      } catch (e) {
+        onError(e)
+      }
+    }
+    const id = setInterval(() => {
+      fetchAndUpdate()
+    }, interval)
+    return () => clearInterval(id)
+  }, [interval])
+  return null
 }
 
 // 3. Create a SearchDebouncer (like a smart search)
@@ -44,7 +85,27 @@ export function PollingComponent(props: any): JSX.Element {
 //    - onResults: What to do with results (like showing matches)
 //    - placeholder: What to show when empty (like "Search...")
 export function SearchDebouncer(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the SearchDebouncer component! Use useEffect with setTimeout to debounce search input.');
+  const { delay, onSearch, onResults, placeholder } = props
+  const [value, setValue] = useState("")
+  useEffect(() => {
+    if (!value) return
+    const timeout = setTimeout(async () => {
+      try {
+        const result = await onSearch(value)
+        onResults(result)
+      } catch (e) {
+        //can handle if needed
+      }
+    }, delay)
+    return () => clearTimeout(timeout)
+  }, [value, delay])
+  return (
+    <input
+      placeholder={placeholder}
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+    />
+  )
 }
 
 // 4. Create a ResourceCleaner (like a janitor)
@@ -52,17 +113,71 @@ export function SearchDebouncer(props: any): JSX.Element {
 //    - onCleanup: What to do when done (like "room clean")
 //    - onError: What to do if wrong (like "can't clean")
 //    - autoClean: Clean automatically? (like scheduled cleaning)
-export function ResourceCleaner(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the ResourceCleaner component! Use useEffect cleanup function to handle resource cleanup.');
+export function ResourceCleaner(props: any): JSX.Element | null {
+
+  const { resource, onCleanup, onError, autoClean } = props
+
+  useEffect(() => {
+    if (!autoClean) return
+
+    return () => {
+      try {
+        onCleanup(resource)
+      } catch (e) {
+        onError(e)
+      }
+    }
+  }, [resource, autoClean])
+  return null
 }
 
 // Components that tests expect:
 export function FetchUser(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the FetchUser component! Fetch user data and display it with loading/error states.');
+  const [user, setUser] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch("https://example.com")
+        if (!response.ok) {
+          throw new Error("Request failed")
+        }
+        const data = await response.json()
+        setUser(data)
+      } catch (e: any) {
+        setError(e.message)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchUser()
+  }, [])
+  if (loading) {
+    return <p>Loading...</p>
+  }
+  if (error) {
+    return <p>Error</p>
+  }
+  return (
+    <div>
+      <p>{user.name}</p>
+      <p>{user.email}</p>
+    </div>
+  )
 }
 
 export function PollingTime(props: any): JSX.Element {
-  throw new Error('🚧 TODO: Implement the PollingTime component! Poll for current time at regular intervals.');
+  const [time, setTime] = useState(new Date().toLocaleTimeString())
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setTime(new Date().toLocaleTimeString())
+    }, 1000)
+    return () => clearInterval(id)
+  }, [])
+  return <p>Current time: {time}</p>
 }
 
 // Example usage (like a preview):
@@ -96,42 +211,42 @@ export function Example() {
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 DataLoader</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Component that fetches and displays data with loading/error states
+                <DataLoader/>
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 PollingComponent</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Component that fetches data at regular intervals using setInterval
+                <PollingComponent/>
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 SearchDebouncer</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Search input component that waits before searching using setTimeout
+                <SearchDebouncer/>
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 ResourceCleaner</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Component that cleans up resources using useEffect cleanup function
+                <ResourceCleaner/>
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 FetchUser</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Component that fetches user data with loading and error handling
+                <FetchUser/>
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 PollingTime</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Component that polls for current time at regular intervals
+                <PollingTime/>
               </div>
             </div>
           </div>

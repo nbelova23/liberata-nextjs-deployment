@@ -19,7 +19,7 @@
  * - Link and NavLink: https://reactrouter.com/docs/en/v6/components/link
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Link, useParams, useNavigate, Navigate } from 'react-router-dom';
 
 // Types
@@ -50,39 +50,142 @@ const products: Product[] = [
 
 // Components
 export function Navigation(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the Navigation component! Use Link components to create a navigation menu.');
+  return (
+    <nav>
+      <Link to="/">Home</Link> |{" "}
+      <Link to="/products">Products</Link> |{" "}
+      <Link to="/admin">Admin</Link> |{" "}
+      <Link to="/profile">Profile</Link>
+    </nav>
+  )
+
 }
 
 export function Home(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the Home component! Create a welcome page with navigation.');
+  return (
+    <div>
+      <Navigation />
+      <h1>Welcome to Our Store</h1>
+    </div>
+  )
 }
 
 export function ProductList(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the ProductList component! Show a list of products with links to details.');
+  return (
+    <div>
+      <Navigation />
+
+      <h2>Product List</h2>
+
+      <ul>
+        {products.map(product => (
+          <li key={product.id}>
+            <Link to={`/products/${product.id}`}>
+              {product.name} - ${product.price}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
 }
 
 export function ProductDetail(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the ProductDetail component! Use useParams to get the product ID and show details.');
+  const { id } = useParams()
+  const product = products.find(
+    (p) => p.id === parseInt(id || "")
+  )
+  if (!product) {
+    return <p>Product not found</p>
+  }
+
+  return (
+    <div>
+      <Navigation />
+
+      <h2>{product.name}</h2>
+      <p>Price: ${product.price}</p>
+      <p>Category: {product.category}</p>
+    </div>
+  )
 }
 
 export function About(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the About component! Create an about page with company info.');
+  return (
+    <div>
+      <Navigation />
+      <h2>About</h2>
+      <p>This is our store. We sell great products!</p>
+    </div>
+  )
 }
 
 export function Contact(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the Contact component! Create a contact form or contact info.');
+  return (
+    <div>
+      <Navigation />
+      <h2>Contact</h2>
+      <p>Email: contact@store.com</p>
+      <p>Phone: 123-456-7890</p>
+    </div>
+  )
 }
 
 export function AdminPanel(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the AdminPanel component! Create an admin-only area.');
-}
+  return <Login />}
 
 export function Profile(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the Profile component! Show user profile information.');
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 0)
+  }, [])
+
+  if (loading) {
+    return <p>Loading...</p>
+  }
+  const user = users[0]
+  return (
+    <div>
+
+      <h2>Profile</h2>
+      <p>Name: {user.name}</p>
+      <p>Role: {user.role}</p>
+    </div>
+  )
 }
 
 export function Login(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the Login component! Create a login form with navigation after login.');
+  const navigate = useNavigate()
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const handleLogin = () => {
+    navigate("/admin")
+  }
+  return (
+    <div>
+      <h2>Sign in</h2>
+      <div>
+        <label htmlFor="username">Username:</label>
+        <input
+          id="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+      </div>
+      <div>
+        <label htmlFor="password">Password:</label>
+        <input
+          id="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
+      <button onClick={handleLogin}>Login</button>
+    </div>
+  )
 }
 
 // Example usage (like a preview):
@@ -172,7 +275,7 @@ export function Example() {
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 Login</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Login form component with navigation after authentication
+                <Login/>
               </div>
             </div>
           </div>
@@ -193,4 +296,21 @@ export function Example() {
   );
 }
 
-export const App = () => <Example />; 
+export const App = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/products" element={<ProductList />} />
+      <Route path="/products/:id" element={<ProductDetail />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/admin" element={<AdminPanel />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/login" element={<Login />} />
+
+      {/* 404 */}
+      <Route path="*" element={<p>Page not found</p>} />
+    </Routes>
+  )
+
+}

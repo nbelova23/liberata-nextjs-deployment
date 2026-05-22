@@ -25,10 +25,29 @@ import React, { createContext, useContext, useState } from 'react';
 //    - toggleTheme: Change the look (like redecorating)
 //    - colors: What colors to use (like paint colors)
 //    - fonts: What text looks like (like wall art)
-export const ThemeContext = createContext<any>(null);
+export const ThemeContext = createContext<any>({
+  theme: "light",
+  toggleTheme: () => {}
+})
 
 export function ThemeProvider({ children }: { children: React.ReactNode }): JSX.Element {
-  throw new Error('🚧 TODO: Implement the ThemeProvider component! Use useState and Context to manage theme state.');
+  const [theme, setTheme] = useState("light")
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light")
+  }
+  const colors =
+    theme === "light"
+      ? { background: "#fff", text: "#000" }
+      : { background: "#000", text: "#fff" }
+  const fonts = {
+    main: "Arial",
+    size: "16px"
+  }
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme, colors, fonts }}>
+      {children}
+    </ThemeContext.Provider>
+  )
 }
 
 // 2. Create a UserContext (like a family photo album)
@@ -39,7 +58,21 @@ export function ThemeProvider({ children }: { children: React.ReactNode }): JSX.
 export const UserContext = createContext<any>(null);
 
 export function UserProvider({ children }: { children: React.ReactNode }): JSX.Element {
-  throw new Error('🚧 TODO: Implement the UserProvider component! Use useState and Context to manage user state.');
+  const [user, setUser] = useState<any>(null)
+  const login = (userData: any) => {
+    setUser(userData)
+  }
+  const logout = () => {
+    setUser(null)
+  }
+  const updateProfile = (newData: any) => {
+    setUser({ ...user, ...newData })
+  }
+  return (
+    <UserContext.Provider value={{ user, login, logout, updateProfile }}>
+      {children}
+    </UserContext.Provider>
+  )
 }
 
 // 3. Create a SettingsContext (like house rules)
@@ -50,7 +83,27 @@ export function UserProvider({ children }: { children: React.ReactNode }): JSX.E
 export const SettingsContext = createContext<any>(null);
 
 export function SettingsProvider({ children }: { children: React.ReactNode }): JSX.Element {
-  throw new Error('🚧 TODO: Implement the SettingsProvider component! Use useState and Context to manage settings.');
+  const defaultSettings = {
+    darkMode: false,
+    notifications: true
+  }
+  const [settings, setSettings] = useState(defaultSettings)
+  const updateSettings = (newSettings: any) => {
+    setSettings({ ...settings, ...newSettings })
+  }
+  const resetSettings = () => {
+    setSettings(defaultSettings)
+  }
+  const saveSettings = () => {
+    localStorage.setItem("settings", JSON.stringify(settings))
+  }
+  return (
+    <SettingsContext.Provider
+      value={{ settings, updateSettings, resetSettings, saveSettings }}
+    >
+      {children}
+    </SettingsContext.Provider>
+  )
 }
 
 // 4. Create a LanguageContext (like family language)
@@ -58,19 +111,60 @@ export function SettingsProvider({ children }: { children: React.ReactNode }): J
 //    - translations: What words mean (like dictionary)
 //    - changeLanguage: Switch language (like learning new)
 //    - t: Translate words (like interpreter)
-export const LanguageContext = createContext<any>(null);
+
+export const LanguageContext = createContext<any>({
+  language: "en",
+  changeLanguage: () => {}
+})
 
 export function LanguageProvider({ children }: { children: React.ReactNode }): JSX.Element {
-  throw new Error('🚧 TODO: Implement the LanguageProvider component! Use useState and Context to manage language.');
+  const translations = {
+    en: {
+      greeting: "Hello",
+      language: "Language"
+    },
+    es: {
+      greeting: "Hola",
+      language: "Idioma"
+    }
+  }
+  const [language, setLanguage] = useState<keyof typeof translations>("en")
+  const changeLanguage = (lang: keyof typeof translations) => {
+    setLanguage(lang)
+  }
+  const t = (key: string) => {
+    return translations[language]?.[key as keyof typeof translations["en"]] || key
+  }
+  return (
+    <LanguageContext.Provider
+      value={{ language, translations, changeLanguage, t }}
+    >
+      {children}
+    </LanguageContext.Provider>
+  )
 }
 
 // Components that use the contexts:
 export function ThemeToggle(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the ThemeToggle component! Use useContext to access and toggle theme.');
+  const { theme, toggleTheme } = useContext(ThemeContext)
+  return (
+    <button onClick={toggleTheme}>
+      Toggle Theme ({theme})
+    </button>
+  )
 }
 
 export function LanguageSelector(): JSX.Element {
-  throw new Error('🚧 TODO: Implement the LanguageSelector component! Use useContext to change language.');
+  const { language, changeLanguage } = useContext(LanguageContext)
+  return (
+    <select
+      value={language}
+      onChange={(e) => changeLanguage(e.target.value)}
+    >
+      <option value="en">English</option>
+      <option value="es">Spanish</option>
+    </select>
+  )
 }
 
 // Example usage (like a preview):
@@ -104,42 +198,50 @@ export function Example() {
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 ThemeProvider</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Provider to share theme state (colors, fonts) across app
+              <ThemeProvider>
+                <ThemeToggle />
+              </ThemeProvider>
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 UserProvider</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Provider to share user authentication state
+                <UserProvider>
+                  <p>User Provider Active</p>
+                </UserProvider>
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 SettingsProvider</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Provider to share app settings and preferences
+                <SettingsProvider>
+                  <p>Settings Provider Active</p>
+                </SettingsProvider>
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 LanguageProvider</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Provider to share language and translations with ThemeToggle
+                <LanguageProvider>
+                  <LanguageSelector />
+                </LanguageProvider>
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 ThemeToggle</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Component using useContext to access and toggle theme
+                <ThemeToggle/>
               </div>
             </div>
             
             <div style={{ padding: '16px', border: '1px dashed #ccc', borderRadius: '8px' }}>
               <div style={{ marginBottom: '12px', fontWeight: 'bold' }}>📝 LanguageSelector</div>
               <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                TODO: Component using useContext to change language
+                <LanguageSelector/>
               </div>
             </div>
           </div>
