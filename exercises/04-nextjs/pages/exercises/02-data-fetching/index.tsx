@@ -65,7 +65,39 @@
  * - getStaticProps: https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation
  */
 
-export default function DataFetching() {
+import { useState, useEffect } from 'react';
+
+function useFetch(url: string) {
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<any>(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+        const res = await fetch(url);
+        const result = await res.json();
+        setData(result);
+      } catch (err) {
+        setError('Failed to fetch data');
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, [url]);
+
+  return { data, loading, error };
+}
+
+function DataLoader({ data, loading, error, children }: any) {
+  if (loading) return <div className="text-center py-4">Loading...</div>;
+  if (error) return <div className="text-red-500 py-4">Error: {error}</div>;
+  return children(data);
+}
+
+export default function DataFetching({ posts }: { posts: any[] }) {
   return (
     <div className="max-w-4xl mx-auto py-8">
       <h1 className="text-2xl font-bold mb-4">Exercise 2: Data Fetching</h1>
@@ -77,13 +109,24 @@ export default function DataFetching() {
       </ul>
       
       {/* TODO: Display your posts data here */}
-      <div className="mb-6 p-4 border-2 border-dashed border-gray-300 rounded">
-        <p className="text-gray-600">Your fetched posts will appear here!</p>
-        <p className="text-sm text-gray-500 mt-2">
-          Hint: Use posts.map() to display each post
-        </p>
-      </div>
-      
+
+      <DataLoader data={posts} loading={!posts} error={null}>
+        {(data: any[]) =>
+          data.length === 0 ? (
+          <p>No posts found</p>
+        ) : (
+          <ul className="space-y-4">
+            {data.slice(0, 5).map((post) => (
+              <li key={post.id} className="p-4 border rounded">
+                <h3 className="font-bold">{post.title}</h3>
+                <p>{post.body}</p>
+              </li>
+            ))}
+          </ul>
+        )
+        }
+      </DataLoader>
+
       <div className="mt-6 p-4 bg-blue-100 rounded">
         <p className="text-blue-800 text-sm">
           💡 <strong>Next Steps:</strong> Follow the step-by-step instructions in the comments above!
@@ -97,3 +140,22 @@ export default function DataFetching() {
 }
 
 // TODO: Add your getServerSideProps function here (see STEP 1 in comments above) 
+
+export async function getServerSideProps() {
+  try {
+    const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const data = await res.json();
+
+    return {
+      props: {
+        posts: data,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        posts: [],
+      },
+    };
+  }
+}

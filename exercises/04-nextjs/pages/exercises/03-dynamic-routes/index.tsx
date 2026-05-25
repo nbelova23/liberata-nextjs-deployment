@@ -65,6 +65,25 @@
  * - getStaticProps: https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation
  */
 
+import Link from 'next/link';
+
+function PostCard({ post }: any) {
+  return (
+    <div className="bg-white shadow-md rounded-lg p-6 border hover:shadow-lg transition-shadow">
+      <h3 className="text-lg font-bold mb-2">{post.title}</h3>
+      <p className="text-gray-600 mb-4">
+        {post.body.substring(0, 100)}...
+      </p>
+
+      <Link href={`/exercises/03-dynamic-routes/posts/${post.id}`}>
+        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+          Read More
+        </button>
+      </Link>
+    </div>
+  );
+}
+
 export default function DynamicRoutes() {
   return (
     <div className="max-w-4xl mx-auto py-8">

@@ -62,24 +62,67 @@
 
 import Link from 'next/link';
 
+function Button({
+  children,
+  variant = 'primary',
+  ...props
+}: {
+  children: React.ReactNode;
+  variant?: 'primary' | 'secondary';
+  [key: string]: any;
+}) {
+  const styles =
+    variant === 'primary'
+      ? 'bg-blue-500 hover:bg-blue-600 text-white'
+      : 'bg-gray-500 hover:bg-gray-600 text-white';
+
+  return (
+    <button className={`px-4 py-2 rounded transition-colors ${styles}`} {...props}>
+      {children}
+    </button>
+  );
+}
+
+function Card({
+  title,
+  children
+}: {
+  title?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="bg-white shadow-md rounded-lg p-6 border">
+      {title && <h3 className="text-lg font-bold mb-3">{title}</h3>}
+      {children}
+    </div>
+  );
+}
+
 export default function GettingStarted() {
   return (
     <div className="max-w-xl mx-auto py-8">
-      <h1 className="text-2xl font-bold mb-4">Exercise 1: Getting Started</h1>
-      <p className="mb-4">Welcome to your first Next.js exercise! In this exercise, you'll learn about:</p>
+      <h1 className="text-4xl font-bold mb-4">Exercise 1: Getting Started</h1>
+
+    <Card title="Getting Started">
+      <p className="mb-4">Welcome to your first Next.js exercise!</p>
       <ul className="list-disc pl-6 mb-4">
         <li>Next.js file-based routing</li>
         <li>Pages and layouts</li>
         <li>Basic navigation and linking</li>
       </ul>
+    </Card>
+
       <p className="mb-2">Edit this file at <code>pages/exercises/01-getting-started/index.tsx</code> to get started.</p>
       <p className="mb-4">Try changing this text to see hot reloading in action!</p>
       
       {/* TODO: Add your Link to the About page here (see STEP 3 in comments above) */}
+  
       <div className="mt-4">
-        <p className="text-gray-600">Add your navigation link here!</p>
+        <Link href = "/exercises/01-getting-started/about">
+          <Button variant="secondary">Go to About Page</Button>
+        </Link>
       </div>
-      
+  
       <div className="mt-6 p-4 bg-yellow-100 rounded">
         <p className="text-yellow-800 text-sm">
           💡 <strong>Hint:</strong> Follow the step-by-step instructions in the comments at the top of this file!

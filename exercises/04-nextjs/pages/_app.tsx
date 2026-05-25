@@ -15,7 +15,23 @@
 
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
+import Layout from './exercises/04-layouts/components/Layout';
+import { ThemeProvider } from './exercises/04-layouts/context/ThemeContext';
+import { AuthProvider } from './exercises/05-authentication/context/AuthContext';
+import '../styles/globals.css';
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
-} 
+  const getLayout =
+    (Component as any).getLayout ||
+    ((page: React.ReactNode) => <Layout>{page}</Layout>);
+
+  return (
+    <AuthProvider>
+      <ThemeProvider>
+        {getLayout(<Component {...pageProps} />)}
+      </ThemeProvider>
+    </AuthProvider>
+  );
+}
+
+
