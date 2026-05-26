@@ -23,11 +23,14 @@ dependencies:
 
 devDependencies:
   '@testing-library/jest-dom':
-    specifier: ^6.0.0
+    specifier: ^6.9.1
     version: 6.9.1
   '@testing-library/react':
     specifier: ^14.3.1
     version: 14.3.1(@types/react@19.1.8)(react-dom@19.1.0)(react@19.1.0)
+  '@testing-library/user-event':
+    specifier: ^14.6.1
+    version: 14.6.1(@testing-library/dom@9.3.4)
   '@types/jest':
     specifier: ^29.5.14
     version: 29.5.14
@@ -44,7 +47,7 @@ devDependencies:
     specifier: ^10.4.17
     version: 10.4.17(postcss@8.4.35)
   jest:
-    specifier: ^29.0.0
+    specifier: ^29.7.0
     version: 29.7.0(@types/node@24.0.1)
   jest-environment-jsdom:
     specifier: ^29.0.0
@@ -1074,6 +1077,15 @@ packages:
       react-dom: 19.1.0(react@19.1.0)
     transitivePeerDependencies:
       - '@types/react'
+    dev: true
+
+  /@testing-library/user-event@14.6.1(@testing-library/dom@9.3.4):
+    resolution: {integrity: sha512-vq7fv0rnt+QTXgPxr5Hjc210p6YKq2kmdziLgnsZGgLJ9e6VAShx1pACLuRjd/AS/sr7phAR58OIIpf0LlmQNw==}
+    engines: {node: '>=12', npm: '>=6'}
+    peerDependencies:
+      '@testing-library/dom': '>=7.21.4'
+    dependencies:
+      '@testing-library/dom': 9.3.4
     dev: true
 
   /@tootallnate/once@2.0.1:
